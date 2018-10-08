@@ -1,0 +1,32 @@
+newmtl apple_ibook_2001:Aluminum
+illum 4
+Kd 0.56 0.56 0.56
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.71 0.71 0.71
+Ns 105.88
+newmtl apple_ibook_2001:Apple_logo
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 0.80 0.80 0.80
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl apple_ibook_2001:LCD
+illum 4
+Kd 0.16 0.16 0.16
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.40 0.40 0.40
+Ns 17.65
+newmtl apple_ibook_2001:White_plastic
+illum 4
+Kd 0.80 0.80 0.80
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08

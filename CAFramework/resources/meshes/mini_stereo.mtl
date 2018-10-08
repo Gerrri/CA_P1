@@ -1,0 +1,26 @@
+newmtl mini_stereo:metalic
+illum 4
+Kd 0.40 0.40 0.40
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.63 0.63 0.63
+Ns 94.12
+newmtl mini_stereo:speaker_material
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd wood-map-speakers.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl mini_stereo:stereo_core_material
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd mini_stereo_texture.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00

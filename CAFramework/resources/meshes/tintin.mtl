@@ -1,0 +1,16 @@
+newmtl rocket:_gecko_Tintin_s_RocketMaterial
+illum 4
+Kd 0.80 0.03 0.05
+Ka 0.80 0.03 0.05
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 1.00 1.00 1.00
+Ns 8.00
+newmtl rocket:_gecko_Tintin_s_RocketMaterial_001
+illum 4
+Kd 0.95 0.95 0.95
+Ka 0.95 0.95 0.95
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 1.00 1.00 1.00
+Ns 8.00

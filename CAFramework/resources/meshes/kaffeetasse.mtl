@@ -1,0 +1,16 @@
+newmtl caffe_final:Ceramique
+illum 4
+Kd 0.90 0.90 0.90
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 80.00
+newmtl caffe_final:Coffee
+illum 4
+Kd 0.13 0.07 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.30 0.30 0.30
+Ns 10.00

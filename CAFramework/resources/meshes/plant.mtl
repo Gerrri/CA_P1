@@ -1,0 +1,25 @@
+newmtl potplant2:Potplant2_4
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.32 0.30 0.21
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.58 0.60 0.54
+Ns 2.81
+newmtl potplant2:Potplant2_6
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 0010.jpg
+Ni 1.00
+Ks 0.40 0.40 0.40
+Ns 3.78
+newmtl potplant2:Potplant2_8
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.75 0.75 0.75
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 2.81

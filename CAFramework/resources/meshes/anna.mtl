@@ -1,0 +1,18 @@
+newmtl f008_midpoly_49_bonesSG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd f008_body_color.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+newmtl f008_midpoly_49_bonesSG1
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd f008_head_color.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00

@@ -1,0 +1,32 @@
+newmtl poolTable:Material
+illum 4
+Kd 0.83 0.85 0.82
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.80 0.80 0.80
+Ns 96.08
+newmtl poolTable:black
+illum 4
+Kd 0.23 0.11 0.08
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 96.08
+newmtl poolTable:chrome
+illum 4
+Kd 0.83 0.85 0.82
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.80 0.80 0.80
+Ns 96.08
+newmtl poolTable:felt
+illum 4
+Kd 0.02 0.35 0.10
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.05 0.05 0.05
+Ns 96.08
