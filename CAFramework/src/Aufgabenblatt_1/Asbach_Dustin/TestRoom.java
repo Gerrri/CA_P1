@@ -53,8 +53,17 @@ public class TestRoom
 
 	private AbstLight light;
 	
-	private Cube cube_Sideboard;
-	private Cube cube_Table_board;
+	/**
+	 * Gruppen für Elemente
+	 */
+	private Group Sideboard = new Group("sideboard");
+	private Group Table = new Group("table");
+	private Group Chair = new Group("chair");
+	private Group Lamp = new Group("lamp");
+	private Group Cup = new Group("cup");
+	private Group Plant = new Group("plant");
+	
+	
 	
 	/**
 	 * Test class for importing mesh into the world 
@@ -77,40 +86,91 @@ public class TestRoom
 		camera.setZRange(1f, 100f);
 		world.attachChild(camera);
 		renderer.setCamera(camera);
+		
 
 		light = new AmbientLight("Lichtquelle");
 		light.setDiffuse (new Vec3(0.5f, 0.5f, 0.5f));
 		world.attachChild(light);
 		
 		
-		//CUBE !!
+		//Sideboard 
 			// set the color of all following elements
 			ColorState col_Sideboard = new ColorState (Color.grey());
 			world.attachChild(col_Sideboard);
 				
 			// generate a cube and attach it to the scene
-			cube_Sideboard = new Cube();
+			Cube cube_Sideboard = new Cube();
 			cube_Sideboard.setSize(4);
 			cube_Sideboard.setTranslation(10, 2, 0);
 			cube_Sideboard.setScale(1, 1, 3);
-			world.attachChild(cube_Sideboard);
+			
+			Sideboard.attachChild(cube_Sideboard);
+			
+			world.attachChild(Sideboard);
+			
+		
 			
 	    //Tisch
 			// set the color of all following elements
 			ColorState col_Table_board = new ColorState (Color.black());
 			world.attachChild(col_Table_board);
 			
-			// generate a cube and attach it to the scene
-			cube_Table_board = new Cube();
-			cube_Table_board.setScale(1.5f, 0.5f, 3);
-			world.attachChild(cube_Table_board);
+			// board
+			Cube board = new Cube();
+			board.setScale(6.0f, 0.3f, 14f);
+			
+			
+			//board.setTranslation(0, 6f, 0);
+			
+			//board.setTranslation(-7.5f, 6f, 7);
+			
+			
+			
+			// leg 1 VR			
+			Cube cube_Table_leg1 = new Cube();
+			cube_Table_leg1.setScale(0.5f, 5f, 0.5f);
+			cube_Table_leg1.setTranslation(2.65f, -2.5f, 6.65f);
+			
+			// leg VL			
+			Cube cube_Table_leg2 = new Cube();
+			cube_Table_leg2.setScale(0.5f, 5f, 0.5f);
+			cube_Table_leg2.setTranslation(-2.65f, -2.5f, 6.65f);
+			
+			// leg HR			
+			Cube cube_Table_leg3 = new Cube();
+			cube_Table_leg3.setScale(0.5f, 5f, 0.5f);
+			cube_Table_leg3.setTranslation(2.65f, -2.5f, -6.65f);
+			
+			// leg HL			
+			Cube cube_Table_leg4 = new Cube();
+			cube_Table_leg4.setScale(0.5f, 5f, 0.5f);
+			cube_Table_leg4.setTranslation(-2.65f, -2.5f, -6.65f);
+			
+	
+			Table.attachChild(cube_Table_leg1);
+			Table.attachChild(cube_Table_leg2);
+			Table.attachChild(cube_Table_leg3);
+			Table.attachChild(cube_Table_leg4);
+			Table.attachChild(board);
+		    
+		    Table.setTranslation(-9f, 5.15f, 0);
+		    //Table.setScale(0.9f, 0.9f, 0.9f);
+		    
+		   
+			
+			// Element to World
+			world.attachChild(Table);
 			
 			
 			
 			
-		
-		
-		
+		// Lampe
+			Lamp = Loader.loadMesh("lamp.obj");
+			Lamp.setScale(0.15f, 0.15f, 0.15f);
+			Lamp.setTranslation(-11, 5.3f, -5);
+			world.attachChild(Lamp);
+			
+			
 		// load mesh object
 		Group meshes = Loader.loadMesh("zimmer.obj");
 		world.attachChild (meshes);
