@@ -84,7 +84,7 @@ public class TestRoom
 		// generate root element of the world
 	    world = new Group("Mesh");
 
-		camera = new PerspectiveCamera(0, 10, 35);
+		camera = new PerspectiveCamera(5, 10, 35);
 		camera.focus(new Vec3(0,7,0));
 		camera.setZRange(1f, 100f);
 		world.attachChild(camera);
