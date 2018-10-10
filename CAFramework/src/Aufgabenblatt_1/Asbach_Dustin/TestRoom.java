@@ -22,7 +22,9 @@ import scenegraph.Color;
 import scenegraph.ColorState;
 import scenegraph.Cube;
 import scenegraph.Group;
+import scenegraph.MaterialState;
 import scenegraph.PerspectiveCamera;
+import scenegraph.PointLight;
 import scenegraph.util.Loader;
 import scenegraph.util.VisualHelp;
 import animation.AbstController;
@@ -62,6 +64,7 @@ public class TestRoom
 	private Group Lamp = new Group("lamp");
 	private Group Cup = new Group("cup");
 	private Group Plant = new Group("plant");
+	private Group figure = new Group ("figur");
 	
 	
 	
@@ -92,17 +95,26 @@ public class TestRoom
 		light.setDiffuse (new Vec3(0.5f, 0.5f, 0.5f));
 		world.attachChild(light);
 		
+		//Punktuelles Licht
+			PointLight light2 = new PointLight("Punktlicht");
+			light2.setTranslation (7f,7f, 5f);
+			light2.setDiffuse (new Vec3(0.8f,0.8f,0.8f));
+			world.attachChild(light2);
+		
 		
 		//Sideboard 
 			// set the color of all following elements
 			ColorState col_Sideboard = new ColorState (Color.grey());
 			world.attachChild(col_Sideboard);
-				
+			
+			
+			
+			
 			// generate a cube and attach it to the scene
 			Cube cube_Sideboard = new Cube();
 			cube_Sideboard.setSize(4);
-			cube_Sideboard.setTranslation(10, 2, 0);
-			cube_Sideboard.setScale(1, 1, 3);
+			cube_Sideboard.setTranslation(10, 2, 3);
+			cube_Sideboard.setScale(0.8f, 0.8f, 3);
 			
 			Sideboard.attachChild(cube_Sideboard);
 			
@@ -112,8 +124,8 @@ public class TestRoom
 			
 	    //Tisch
 			// set the color of all following elements
-			ColorState col_Table_board = new ColorState (Color.black());
-			world.attachChild(col_Table_board);
+			MaterialState mat = new MaterialState ();
+			world.attachChild(mat);
 			
 			// board
 			Cube board = new Cube();
@@ -152,6 +164,8 @@ public class TestRoom
 			Table.attachChild(cube_Table_leg3);
 			Table.attachChild(cube_Table_leg4);
 			Table.attachChild(board);
+			
+			
 		    
 		    Table.setTranslation(-9f, 5.15f, 0);
 		    //Table.setScale(0.9f, 0.9f, 0.9f);
@@ -168,7 +182,37 @@ public class TestRoom
 			Lamp = Loader.loadMesh("lamp.obj");
 			Lamp.setScale(0.15f, 0.15f, 0.15f);
 			Lamp.setTranslation(-11, 5.3f, -5);
+			Lamp.setRotation(0, 3, 0);
 			world.attachChild(Lamp);
+			
+			
+		// Kaffee Tasse
+			Cup = Loader.loadMesh("kaffeetasse.obj");
+			Cup.setScale(0.15f, 0.15f, 0.15f);
+			Cup.setTranslation(-11, 5.3f, 3);
+			world.attachChild(Cup);
+			
+		// Pflanze
+			Plant = Loader.loadMesh("plant.obj");
+			Plant.setTranslation(7, 1, -3);
+			Plant.setScale(0.07f, 0.07f, 0.07f);
+			world.attachChild(Plant);
+			
+		// Stuhl
+			Chair = Loader.loadMesh("officeChair.obj");
+			Chair.setScale(0.2f, 0.2f, 0.2f);
+			Chair.setTranslation(-2.5f, 0f, 2);
+			Chair.setRotation(0, -0.50f, 0);
+			world.attachChild(Chair);
+			
+	    // Figur
+			figure = Loader.loadMesh("anna_faces.obj");
+			figure.setScale(0.2f, 0.2f, 0.2f);
+			figure.setTranslation(9.4f, 3.55f, 2);
+			figure.setRotation(0, -0.35f, 0);
+			world.attachChild(figure);
+
+	
 			
 			
 		// load mesh object
