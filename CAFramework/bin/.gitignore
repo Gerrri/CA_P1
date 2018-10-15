@@ -1,1 +1,12 @@
 /rm_scenegraph/
+/.classpath
+/.gitignore
+/.project
+/Aufgabenblatt_1/
+/animation/
+/examples/
+/math/
+/particles/
+/renderer/
+/scenegraph/
+/util/

@@ -8,6 +8,14 @@
  * and use in source and binary forms, with or without modification, requires explicit permission. 
  */
 
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 1
+*Aufgabe : 1.1 + 1.2
+**/
+
 package Aufgabenblatt_1.Asbach_Dustin;
 
 import java.util.ArrayList;
