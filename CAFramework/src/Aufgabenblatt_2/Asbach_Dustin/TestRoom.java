@@ -61,6 +61,8 @@ public class TestRoom
 	/**
 	 * Gruppen für Elemente
 	 */
+	private float pi = (float) 3.14159265359;
+	
 	private Group Sideboard = new Group("sideboard");
 	private Group Table = new Group("table");
 	private Group Chair = new Group("chair");
@@ -68,8 +70,9 @@ public class TestRoom
 	private Group Cup = new Group("cup");
 	private Group Plant = new Group("plant");
 	private Group figure = new Group ("figur");
-	
 	private Group clock = new Group ("Clock");
+	
+	
 	
 	
 	
@@ -133,7 +136,30 @@ public class TestRoom
 			//farbe auf schwarz stellen
 			ColorState col_clock_lines = new ColorState (Color.black());
 			clock.attachChild(col_clock_lines);
-		
+			
+			
+
+			
+			
+
+			float[] pi_grad_duenn = {(pi/6),(pi/3),(2*pi/3),(5*pi/6),(7*pi/6),(4*pi/3),(5*pi/3),(11*pi/6)};
+			float[] pi_grad_dick = {0,(pi/2), pi,(3*pi/2) };
+			Group[] clock_line_duenn = new Group[8];
+			Group[] clock_line_dick = new Group[4];
+			
+			//dünne Linie erstellen
+			Cube small_line = new Cube();
+			small_line.setTranslation(0, 0.105f, -0.84f);
+			small_line.setScale(0.03f, 0.2f,0.12f);
+			
+			for(int i=0; i<pi_grad_duenn.length; i++) {
+				clock_line_duenn[i] = new Group("Linie_duenn"+i);
+				clock_line_duenn[i].attachChild(small_line);
+				clock_line_duenn[i].setRotation(0, (pi_grad_duenn[i]), 0);
+
+				clock.attachChild(clock_line_duenn[i]);				
+			}
+			
 			
 			//große striche erstellen
 			Cube big_line = new Cube();
@@ -141,19 +167,36 @@ public class TestRoom
 			big_line.setScale(0.06f, 0.2f,0.24f);
 			clock.attachChild(big_line);
 			
-			//dünne Linie erstellen
-			Cube small_line2 = new Cube();
-			small_line2.setTranslation(0, 0.105f, -0.84f);
-			small_line2.setScale(0.03f, 0.2f,0.12f);
-			clock.attachChild(small_line2);
 			
+			for(int i=0; i<pi_grad_dick.length; i++) {
+				clock_line_dick[i] = new Group("Linie_dick"+i);
+				clock_line_dick[i].attachChild(big_line);
+				clock_line_dick[i].setRotation(0, (pi_grad_dick[i]), 0);
+				
+				clock.attachChild(clock_line_dick[i]);				
+			}
+			
+
+			/*
+			Group c_line12 = new Group("Linie12");
+			c_line12.attachChild(small_line);
+			clock.attachChild(c_line12);
+			
+			Group c_line11 = new Group("Linie11");
+			c_line11.attachChild(small_line);
+			c_line11.setRotation(0, (pi/6), 0);
+			clock.attachChild(c_line11);
+			*/
+			
+			
+			/*			 
 			Cube small_line = new Cube();
 			small_line.setRotation(0, -0.33333f, 0);
 			small_line.setTranslation(0.3f, 0.105f,-0.79f);
 			small_line.setScale(0.03f, 0.2f,0.12f);
 			
 			clock.attachChild(small_line);
-	
+			*/
 			
 			
 			
