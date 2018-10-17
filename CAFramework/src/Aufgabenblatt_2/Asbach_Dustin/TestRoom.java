@@ -112,9 +112,9 @@ public class TestRoom
 			light2.setDiffuse (new Vec3(0.8f,0.8f,0.8f));
 			world.attachChild(light2);
 		
+			
+			
 		//Uhr
-			
-			
 			
 			//weiﬂer groﬂer Ring
 			Cylinder clock_Body = new Cylinder();
@@ -174,8 +174,6 @@ public class TestRoom
 			
 			
 			
-
-			
 			//Zeiger Minuten
 			Cube zeiger_gross = new Cube();
 			zeiger_gross.setScale(0.06f, 0.2f,0.6f);
@@ -197,35 +195,6 @@ public class TestRoom
 			zeiger_stunden.setRotation(0, 0, 0);
 			zeiger_stunden.attachChild(zeiger_klein);
 			clock.attachChild(zeiger_stunden);
-			
-			
-			
-
-			/*
-			Group c_line12 = new Group("Linie12");
-			c_line12.attachChild(small_line);
-			clock.attachChild(c_line12);
-			
-			Group c_line11 = new Group("Linie11");
-			c_line11.attachChild(small_line);
-			c_line11.setRotation(0, (pi/6), 0);
-			clock.attachChild(c_line11);
-			*/
-			
-			
-			/*			 
-			Cube small_line = new Cube();
-			small_line.setRotation(0, -0.33333f, 0);
-			small_line.setTranslation(0.3f, 0.105f,-0.79f);
-			small_line.setScale(0.03f, 0.2f,0.12f);
-			
-			clock.attachChild(small_line);
-			*/
-			
-			
-			
-			
-			
 			
 			
 			world.attachChild(clock);
