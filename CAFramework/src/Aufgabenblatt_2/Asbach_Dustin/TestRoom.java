@@ -138,10 +138,6 @@ public class TestRoom
 			clock.attachChild(col_clock_lines);
 			
 			
-
-			
-			
-
 			float[] pi_grad_duenn = {(pi/6),(pi/3),(2*pi/3),(5*pi/6),(7*pi/6),(4*pi/3),(5*pi/3),(11*pi/6)};
 			float[] pi_grad_dick = {0,(pi/2), pi,(3*pi/2) };
 			Group[] clock_line_duenn = new Group[8];
@@ -165,7 +161,7 @@ public class TestRoom
 			Cube big_line = new Cube();
 			big_line.setTranslation(0, 0.105f, 0.78f);
 			big_line.setScale(0.06f, 0.2f,0.24f);
-			clock.attachChild(big_line);
+
 			
 			
 			for(int i=0; i<pi_grad_dick.length; i++) {
@@ -175,6 +171,34 @@ public class TestRoom
 				
 				clock.attachChild(clock_line_dick[i]);				
 			}
+			
+			
+			
+
+			
+			//Zeiger Minuten
+			Cube zeiger_gross = new Cube();
+			zeiger_gross.setScale(0.06f, 0.2f,0.6f);
+			zeiger_gross.setTranslation(0, 0.105f, 0.25f);
+
+			//Zeiger Minuten Group
+			Group zeiger_minuten = new Group("Zeiger_minuten");
+			zeiger_minuten.setRotation(0, pi/3, 0);
+			zeiger_minuten.attachChild(zeiger_gross);
+			clock.attachChild(zeiger_minuten);
+			
+			//Zeiger Stunden
+			Cube zeiger_klein = new Cube();
+			zeiger_klein.setScale(0.06f, 0.2f,0.5f);
+			zeiger_klein.setTranslation(0, 0.105f, 0.20f);
+
+			//Zeiger Stunden Group
+			Group zeiger_stunden = new Group("Zeiger_stunden");
+			zeiger_stunden.setRotation(0, 0, 0);
+			zeiger_stunden.attachChild(zeiger_klein);
+			clock.attachChild(zeiger_stunden);
+			
+			
 			
 
 			/*
