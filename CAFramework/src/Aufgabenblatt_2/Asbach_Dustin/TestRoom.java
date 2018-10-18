@@ -61,7 +61,7 @@ public class TestRoom
 	/**
 	 * Gruppen für Elemente
 	 */
-	private float pi = (float) 3.14159265359;
+	private float pi = 3.14159265359f;
 	
 	private Group Sideboard = new Group("sideboard");
 	private Group Table = new Group("table");
@@ -92,11 +92,11 @@ public class TestRoom
 		// generate root element of the world
 	    world = new Group("Mesh");
 
-		//camera = new PerspectiveCamera(5, 10, 35);
-	    camera = new PerspectiveCamera(0, 5, 0);
+		camera = new PerspectiveCamera(5, 10, 35);
+	    //camera = new PerspectiveCamera(0, 5, 0);
 	    
-	    //camera.focus(new Vec3(0,7,0));
-	    camera.focus(new Vec3(0,0,0));
+	    camera.focus(new Vec3(0,7,0));
+	    //camera.focus(new Vec3(0,0,0));
 		camera.setZRange(1f, 100f);
 		world.attachChild(camera);
 		renderer.setCamera(camera);
@@ -145,7 +145,7 @@ public class TestRoom
 			
 			//dünne Linie erstellen
 			Cube small_line = new Cube();
-			small_line.setTranslation(0, 0.105f, -0.84f);
+			small_line.setTranslation(0, 0.11f, -0.84f);
 			small_line.setScale(0.03f, 0.2f,0.12f);
 			
 			for(int i=0; i<pi_grad_duenn.length; i++) {
@@ -159,7 +159,7 @@ public class TestRoom
 			
 			//große striche erstellen
 			Cube big_line = new Cube();
-			big_line.setTranslation(0, 0.105f, 0.78f);
+			big_line.setTranslation(0, 0.11f, 0.78f);
 			big_line.setScale(0.06f, 0.2f,0.24f);
 
 			
@@ -177,8 +177,8 @@ public class TestRoom
 			//Zeiger Minuten
 			Cube zeiger_gross = new Cube();
 			zeiger_gross.setScale(0.06f, 0.2f,0.6f);
-			zeiger_gross.setTranslation(0, 0.105f, 0.25f);
-
+			zeiger_gross.setTranslation(0, 0.11f, 0.25f);
+			
 			//Zeiger Minuten Group
 			Group zeiger_minuten = new Group("Zeiger_minuten");
 			zeiger_minuten.setRotation(0, pi/3, 0);
@@ -188,7 +188,7 @@ public class TestRoom
 			//Zeiger Stunden
 			Cube zeiger_klein = new Cube();
 			zeiger_klein.setScale(0.06f, 0.2f,0.5f);
-			zeiger_klein.setTranslation(0, 0.105f, 0.20f);
+			zeiger_klein.setTranslation(0, 0.11f, 0.20f);
 
 			//Zeiger Stunden Group
 			Group zeiger_stunden = new Group("Zeiger_stunden");
@@ -196,16 +196,18 @@ public class TestRoom
 			zeiger_stunden.attachChild(zeiger_klein);
 			clock.attachChild(zeiger_stunden);
 			
+			//Clock im Raum Anordnen
+			clock.setRotation(pi/2, pi/2, 0);
+			clock.setTranslation(-10, 10, 10);
+			
 			
 			world.attachChild(clock);
 			
-		/*
+		
 		//Sideboard 
 			// set the color of all following elements
 			ColorState col_Sideboard = new ColorState (Color.grey());
 			world.attachChild(col_Sideboard);
-			
-			
 			
 			
 			// generate a cube and attach it to the scene
@@ -317,7 +319,7 @@ public class TestRoom
 		Group meshes = Loader.loadMesh("zimmer.obj");
 		world.attachChild (meshes);
 
-*/
+
 		world = VisualHelp.makeGrid(world, 30);
 		
 		
