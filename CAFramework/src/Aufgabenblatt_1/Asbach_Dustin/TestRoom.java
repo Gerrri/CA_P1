@@ -12,8 +12,8 @@
 *CA Winter 2018/19
 *Name , Vorname : Asbach , Dustin
 *Matrikelnummer : 11117108
-*Aufgabenblatt : 1
-*Aufgabe : 1.1 + 1.2
+*Aufgabenblatt : 2
+*Aufgabe : 2.1 
 **/
 
 package Aufgabenblatt_1.Asbach_Dustin;
