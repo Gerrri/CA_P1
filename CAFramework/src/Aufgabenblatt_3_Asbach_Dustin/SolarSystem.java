@@ -69,7 +69,7 @@ public class SolarSystem
 	private Group mer_sys = new Group("mer_sys");
 	private Group erd_sys = new Group("erd_sys");
 	private Group mon_sys = new Group("mon_sys");
-	private Group temp_sys = new Group("temp_sys");
+	private Group uni_sys = new Group("uni_sys");
 	
 	private CirclePosController CSC_mond;
 	private CirclePosController CSC_erde;
@@ -111,9 +111,11 @@ public class SolarSystem
 			Sphere sonne = new Sphere();
 			sonne.setRadius(1.2f);		
 			
-			sun_sys.setRotation(0, pi/4, 0);
+			sun_sys.setRotation(pi/4, 0, 0);
 			
 			sun_sys.attachChild(sonne);
+			
+			uni_sys.attachChild(sun_sys);
 			
 		
 		
@@ -125,13 +127,12 @@ public class SolarSystem
 			merkur.setRadius(0.8f);
 			
 			mer_sys.attachChild(merkur);
-			mer_sys.setRotation(0, -pi/4, 0);
+			mer_sys.setRotation(pi/2, 0, 0);
 			
 			//drehen
 			CSC_merkur = new CirclePosController("ctl_merk",5f,merkur.getChannel(AbstSpatial.TRANSLATION));
-
-			sun_sys.attachChild(mer_sys);
 			
+			uni_sys.attachChild(mer_sys);
 			
 		//Mond
 			ColorState gruen = new ColorState (Color.green());
@@ -147,7 +148,7 @@ public class SolarSystem
 			
 			//drehen
 			CSC_mond = new CirclePosController("ctl_mond",3f,mond.getChannel(AbstSpatial.TRANSLATION));
-			
+			CSC_mond.setRate(3);
 			
 			
 			
@@ -159,13 +160,11 @@ public class SolarSystem
 			erde.setRadius(1.0f);
 			
 			erd_sys.attachChild(erde);
-			erd_sys.setRotation(0, pi/4, 0);
 			
 			
 			//drehen
 			CSC_erde = new CirclePosController("ctl_erd",10f,erd_sys.getChannel(AbstSpatial.TRANSLATION));
-			
-			
+						
 			sun_sys.attachChild(erd_sys);
 		
 		
@@ -179,7 +178,7 @@ public class SolarSystem
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp())); 
 		
 
-		world.attachChild(sun_sys);
+		world.attachChild(uni_sys);
 		//world.attachChild(mer_sys);
 		//world.attachChild(erd_sys);
 
