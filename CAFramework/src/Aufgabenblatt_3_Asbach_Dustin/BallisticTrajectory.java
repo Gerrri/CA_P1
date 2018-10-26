@@ -85,10 +85,10 @@ public class BallisticTrajectory
 	    world = new Group("Mesh");
 
 	    
-		camera = new PerspectiveCamera(0, 7, 20);
+		camera = new PerspectiveCamera(0, 7, 45);
 	    //camera = new PerspectiveCamera(0, 5, 0);
 	    
-	    camera.focus(new Vec3(0,2,0));
+	    camera.focus(new Vec3(0,8,0));
 	    //camera.focus(new Vec3(0,0,0));
 		camera.setZRange(1f, 100f);
 		world.attachChild(camera);
@@ -102,8 +102,8 @@ public class BallisticTrajectory
 		Sphere kugel = new Sphere();
 		kugel.setRadius(1f);
 			
-		// Ballistic Controller
-		bal_ctl = new BallisticController("test", new Vec3(3, 10, 3), new Vec3(0.1f, 0.1f, 0.1f), new Vec3(0.1f, 0.1f, 0.1f), 
+		// Ballistic Controller  STARTPUNKT --- Startgeschwindigkeit --- beschleunigung
+		bal_ctl = new BallisticController("test", new Vec3(6, 20, 3), new Vec3(-20f, 10f, -0f), new Vec3(-3f, -40f, -0f), 
 											kugel.getChannel(AbstSpatial.TRANSLATION));
 		
 			

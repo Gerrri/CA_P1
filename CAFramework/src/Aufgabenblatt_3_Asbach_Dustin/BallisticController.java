@@ -7,7 +7,7 @@ import scenegraph.Channel;
 public class BallisticController extends AbstController{
 	
 	String name;
-	Vec3 x0, v0, a; // Startposition, Startgeschwindigkeit, beschleunigung
+	Vec3 x0, v0, a, x0_start; // Startposition, Startgeschwindigkeit, beschleunigung
 	Channel channel;
 	float time_old;
 	
@@ -19,6 +19,7 @@ public class BallisticController extends AbstController{
 		setName(this.name);
 		
 		this.x0 = pos;
+		this.x0_start = pos;
 		this.v0 = vel;
 		this.a = acc;
 		this.channel = channel;
@@ -32,24 +33,23 @@ public class BallisticController extends AbstController{
 			return false;
 		}
 		
-		if(getLocalTime(time)-time_old > 0) {
-			
-			
-			// x0 + vo * deltat;
-			//x0 = x0.add(v0.mul(getLocalTime(time)-time_old));
-			// v0 = vi
-			//v0 = v0.add(a.mul(getLocalTime(time)-time_old));
-			
-			x0 = x0.sub(a);
+		if(getLocalTime(time)-time_old > 0 && x0.y>1f) {
+				
+			// der Test hier funktioniert prima :D
+			x0 = x0.add(new Vec3(v0).mul(getLocalTime(time)-time_old));
+			v0 = v0.add(new Vec3(a).mul(getLocalTime(time)-time_old));
 			
 			// set the channel object to calculated output value (postion).
 			Vec3 ref_Pos = (Vec3) channel.getData();
 			ref_Pos.set(x0);
-			
 		
-			
-		time_old = time;
+			time_old = time;
 		}
+		
+		
+		
+		
+		
 		return true; 
 		
 	}
