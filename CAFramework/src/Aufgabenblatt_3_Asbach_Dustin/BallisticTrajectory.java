@@ -68,6 +68,7 @@ public class BallisticTrajectory
 	//private Group sun_sys = new Group("sun_sys");
 	
 	//private CirclePosController CSC_mond;
+	private BallisticController bal_ctl;
 
 	
 	/**
@@ -97,10 +98,13 @@ public class BallisticTrajectory
 		light.setDiffuse (new Vec3(0.5f, 0.5f, 0.5f));
 		world.attachChild(light);
 		
-		
+		//Kugel
+		Sphere kugel = new Sphere();
+		kugel.setRadius(1f);
 			
-		
-		
+		// Ballistic Controller
+		bal_ctl = new BallisticController("test", new Vec3(3, 10, 3), new Vec3(0.1f, 0.1f, 0.1f), new Vec3(0.1f, 0.1f, 0.1f), 
+											kugel.getChannel(AbstSpatial.TRANSLATION));
 		
 			
 		
@@ -111,11 +115,11 @@ public class BallisticTrajectory
 		
 		// Cam controller
 		controllers = new ArrayList<AbstController>();
-		//controllers.add(CSC_merkur);
+		controllers.add(bal_ctl);
 		controllers.add(new CameraController(camera.getChannel(AbstCamera.TRANSLATION), 
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp())); 
 		
-
+		world.attachChild(kugel);
 		world = VisualHelp.makeGrid(world, 30);
 		
 		
