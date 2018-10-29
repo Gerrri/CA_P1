@@ -8,7 +8,15 @@
  * and use in source and binary forms, with or without modification, requires explicit permission. 
  */
 
-package Aufgabenblatt_3_Asbach_Dustin;
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 3
+*Aufgabe : 3.1
+**/
+
+package Aufgabenblatt_3.Asbach_Dustin;
 
 import java.time.Clock;
 import java.util.ArrayList;

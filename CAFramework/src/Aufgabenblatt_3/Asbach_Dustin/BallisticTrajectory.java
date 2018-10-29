@@ -8,7 +8,15 @@
  * and use in source and binary forms, with or without modification, requires explicit permission. 
  */
 
-package Aufgabenblatt_3_Asbach_Dustin;
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 3
+*Aufgabe : 3.2
+**/
+
+package Aufgabenblatt_3.Asbach_Dustin;
 
 import java.time.Clock;
 import java.util.ArrayList;
@@ -103,7 +111,7 @@ public class BallisticTrajectory
 		kugel.setRadius(1f);
 			
 		// Ballistic Controller  STARTPUNKT --- Startgeschwindigkeit --- beschleunigung
-		bal_ctl = new BallisticController("test", new Vec3(6, 20, 3), new Vec3(-20f, 10f, -0f), new Vec3(-3f, -40f, -0f), 
+		bal_ctl = new BallisticController("test", new Vec3(6, 10, 3), new Vec3(-20f, 10f, -0f), new Vec3(-0f, -30f, -0f), 
 											kugel.getChannel(AbstSpatial.TRANSLATION));
 		
 			

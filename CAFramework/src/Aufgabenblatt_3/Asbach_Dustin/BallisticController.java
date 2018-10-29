@@ -1,4 +1,12 @@
-package Aufgabenblatt_3_Asbach_Dustin;
+package Aufgabenblatt_3.Asbach_Dustin;
+
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 3
+*Aufgabe : 3.2
+**/
 
 import animation.AbstController;
 import math.Vec3;
