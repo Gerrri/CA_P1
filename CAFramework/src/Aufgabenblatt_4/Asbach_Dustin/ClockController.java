@@ -26,8 +26,6 @@ public class ClockController extends AbstController {
 		
 		h_mat4 = (Mat4) ch_rot_h.getData();
 		m_mat4 = (Mat4) ch_rot_m.getData();
-		
-		init_vec(start_h, start_m);
 	}
 	
 
@@ -39,14 +37,22 @@ public class ClockController extends AbstController {
 		
 		ver_time = getLocalTime(time)-time_old;
 		
-		if(ver_time > 0) { //aktualisiere alle 60 (60000ms) sekunden
+		
+		if(ver_time > 0) { 
 			
-
-			t_m = m_mat4.rotationY(-pi/1800*getLocalTime(time)); //= h_mat4.add(new Vec3(0, start_h*pi/6+(start_m*pi/360), 0));
+			
+			// -pi/1800 							=> bewegung Pro Sekunde des Minutenzeigers
+			// getLocalTime(time)+(start_m*60)		=> Aktuelle Zeit + voreingestellte Minuten (in Sekunden)
+			// +pi 									=> verschiebung um 180 Grad
+			
+			t_m = Mat4.rotationY(-pi/1800*(getLocalTime(time)+(start_m*60))+pi); 
 			m_mat4.set(t_m);
 			
 			
-			t_h = h_mat4.rotationY(-pi/10800*getLocalTime(time)); //pi/6-pi/360
+			// -pi/10800  							=> bewegung Pro Sekunde des Stundenzeigers
+			// getLocalTime(time)+(start_h*60*60) 	=> Akutell verstrichene Zeit + Start wert der Uhr (in Sekunden)
+			// +pi-(start_m*pi/360) 				=> + verschiebung um 180 grad - eingestellte Minutenanzahl 
+			t_h = Mat4.rotationY(-pi/10800*(getLocalTime(time)+(start_h*1800))+pi-(start_m*pi/360)); 
 			h_mat4.set(t_h);
 			
 			
@@ -56,18 +62,6 @@ public class ClockController extends AbstController {
 		
 		return true; 
 		
-	}
-	
-	private void init_vec(int start_h, int start_m){
-		
-		//m_mat4.rotationY(start_m*6f); //= m_mat4.add(new Vec3(0, start_m*pi/30, 0));
-		t_m = m_mat4.rotationY(pi-(start_m*pi/30)); //= h_mat4.add(new Vec3(0, start_h*pi/6+(start_m*pi/360), 0));
-		m_mat4.set(t_m);
-		
-		t_h = h_mat4.rotationY(pi-(start_h*pi/6)-(start_m*pi/360));
-		h_mat4.set(t_h);
-		
-	
 	}
 	
 	

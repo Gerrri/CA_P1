@@ -204,7 +204,7 @@ public class TestRoom
 			//Clock im Raum Anordnen
 			clock.setRotation(pi/2, pi/2, 0);
 			clock.setTranslation(-10, 10, 10);
-			cc = new ClockController("Uhr", 3 , 10, zeiger_stunden.getChannel(AbstSpatial.ROTATION), zeiger_minuten.getChannel(AbstSpatial.ROTATION));
+			cc = new ClockController("Uhr", 1 , 32, zeiger_stunden.getChannel(AbstSpatial.ROTATION), zeiger_minuten.getChannel(AbstSpatial.ROTATION));
 			
 			
 			world.attachChild(clock);
