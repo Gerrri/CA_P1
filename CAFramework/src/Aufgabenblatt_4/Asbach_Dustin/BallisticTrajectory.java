@@ -76,7 +76,7 @@ public class BallisticTrajectory
 	//private Group sun_sys = new Group("sun_sys");
 	
 	//private CirclePosController CSC_mond;
-	private BallisticController bal_ctl;
+
 
 	
 	/**
@@ -84,6 +84,7 @@ public class BallisticTrajectory
 	 */
 	public BallisticTrajectory(int width, int height)
 	{
+
 		renderer = new Ogl3Renderer(width, height);
 		renderer.initState();
 		renderer.setTitle("Mesh laden");
@@ -93,7 +94,7 @@ public class BallisticTrajectory
 	    world = new Group("Mesh");
 
 	    
-		camera = new PerspectiveCamera(0, 7, 45);
+		camera = new PerspectiveCamera(0, 30, 50);
 	    //camera = new PerspectiveCamera(0, 5, 0);
 	    
 	    camera.focus(new Vec3(0,8,0));
@@ -107,30 +108,50 @@ public class BallisticTrajectory
 		world.attachChild(light);
 		
 		//Kugel
-		Sphere kugel = new Sphere();
-		kugel.setRadius(1f);
-			
-		// Ballistic Controller  STARTPUNKT --- Startgeschwindigkeit --- beschleunigung
-		bal_ctl = new BallisticController("test", new Vec3(6, 10, 3), new Vec3(-20f, 10f, -0f), new Vec3(-0f, -30f, -0f), 
-											kugel.getChannel(AbstSpatial.TRANSLATION));
-		
+		//Sphere kugel = new Sphere();
+		//kugel.setRadius(1f);
 			
 		
-			
-		
-			
+		//bal_ctl = new BallisticController("test", new Vec3(6, 10, 3), new Vec3(-20f, 10f, -0f), new Vec3(-0f, -30f, -0f), 
+		//									kugel.getChannel(AbstSpatial.TRANSLATION));
 		
 		
 		// Cam controller
 		controllers = new ArrayList<AbstController>();
-		controllers.add(bal_ctl);
+				
+		Group kugeln = new Group("Kugeln");
+		//farbe auf Rot stellen
+		ColorState col_clock_ring = new ColorState (Color.green());
+		kugeln.attachChild(col_clock_ring);
+		
+		
+		
+		ArrayList<BallisticController> bal_ctl = new ArrayList<BallisticController>() ;  
+		
+		for(int i=0;i<1000;i++) {
+			Sphere kugel = new Sphere(1f);
+			kugeln.attachChild(kugel);
+			
+			
+			// Ballistic Controller  STARTPUNKT --- Startgeschwindigkeit --- beschleunigung
+			bal_ctl.add(new BallisticController("test", new Vec3(0, 25, 0), new Vec3((40*((float)Math.random()-0.5f)), 10f, (((float)Math.random()-0.5f))*40), new Vec3(-0f, -18f, -0f), 
+					kugel.getChannel(AbstSpatial.TRANSLATION)));
+			
+			//bal_ctl.get(i).setRate((float)Math.random()+1);
+
+			controllers.add(bal_ctl.get(i));
+								
+		}
+		
 		controllers.add(new CameraController(camera.getChannel(AbstCamera.TRANSLATION), 
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp())); 
 		
-		world.attachChild(kugel);
+		VisualHelp.makeTimeGrid(world, 20, 10);
+		VisualHelp.markTimeOnGrid(10f);
+		world.attachChild(kugeln);
 		world = VisualHelp.makeGrid(world, 30);
 		
-		
+
 	}
 	
 	
@@ -156,8 +177,8 @@ public class BallisticTrajectory
 	 * Gameloop
 	 */
 	private  void gameLoop() {
-		final int FPS = 25;					// frames per second
-		final int deltaTime = 1000/FPS;		// delta time in milliseconds
+		//final int FPS = 25;					// frames per second				//modifiziert !
+		final int deltaTime = 1000/20;		// delta time 20 milliseconds			//modifiziert !
 		long updateRealTime;
 		long sleepTime;						// time to wait until next frame
 		long animationTime;					// animation time in milliseconds (starts at 0)
@@ -185,6 +206,17 @@ public class BallisticTrajectory
 				}
 			}	
 			else {
+				//modifiziert start!
+				sleepTime = deltaTime - sleepTime % deltaTime;
+				try {
+					Thread.sleep(sleepTime);
+					
+				}catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//modifiziert ende!
+				
 				updateRealTime = System.currentTimeMillis();
 			}
 		}
