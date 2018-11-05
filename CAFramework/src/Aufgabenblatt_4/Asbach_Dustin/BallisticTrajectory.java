@@ -8,12 +8,16 @@
  * and use in source and binary forms, with or without modification, requires explicit permission. 
  */
 
+
+
+
+
 /**
 *CA Winter 2018/19
 *Name , Vorname : Asbach , Dustin
 *Matrikelnummer : 11117108
-*Aufgabenblatt : 3
-*Aufgabe : 3.2
+*Aufgabenblatt : 4
+*Aufgabe : 4.2
 **/
 
 package Aufgabenblatt_4.Asbach_Dustin;
@@ -146,10 +150,12 @@ public class BallisticTrajectory
 		controllers.add(new CameraController(camera.getChannel(AbstCamera.TRANSLATION), 
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp())); 
 		
-		//VisualHelp.makeTimeGrid(world, 20, 10);
-		//VisualHelp.markTimeOnGrid(10f);
+		
 		world.attachChild(kugeln);
-		world = VisualHelp.makeGrid(world, 30);
+		world = VisualHelp.makeGrid(world, 40);
+		world = VisualHelp.makeTimeGrid(world, 20, 5);
+		
+		//world = VisualHelp.markTimeOnGrid(30f);
 		
 
 	}

@@ -4,13 +4,14 @@ package Aufgabenblatt_4.Asbach_Dustin;
 *CA Winter 2018/19
 *Name , Vorname : Asbach , Dustin
 *Matrikelnummer : 11117108
-*Aufgabenblatt : 3
-*Aufgabe : 3.2
+*Aufgabenblatt : 4
+*Aufgabe : 4.2
 **/
 
 import animation.AbstController;
 import math.Vec3;
 import scenegraph.Channel;
+import scenegraph.util.VisualHelp;
 
 public class BallisticController extends AbstController{
 	
@@ -41,6 +42,7 @@ public class BallisticController extends AbstController{
 			return false;
 		}
 		
+
 		if(getLocalTime(time)-time_old > 0 && x0.y>1f) {
 				
 			// der Test hier funktioniert prima :D
@@ -50,6 +52,9 @@ public class BallisticController extends AbstController{
 			// set the channel object to calculated output value (postion).
 			Vec3 ref_Pos = (Vec3) channel.getData();
 			ref_Pos.set(x0);
+			
+			
+			VisualHelp.markTimeOnGrid(time);
 		
 			time_old = time;
 		}

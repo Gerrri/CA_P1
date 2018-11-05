@@ -8,6 +8,14 @@
  * and use in source and binary forms, with or without modification, requires explicit permission. 
  */
 
+
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 4
+*Aufgabe : 4.1
+**/
 package Aufgabenblatt_4.Asbach_Dustin;
 
 import java.time.Clock;
@@ -86,6 +94,13 @@ public class TestRoom
 	 */
 	public TestRoom(int width, int height)
 	{
+		
+		long time = java.lang.System.currentTimeMillis()+3600000;
+        int locsek = (int) (time / 1000) % 60;
+        int locmin = (int)(time / 60000) % 60;
+        int lochour = (int) ((time / 3600000)) % 24;
+        
+        
 		renderer = new Ogl3Renderer(width, height);
 		renderer.initState();
 		renderer.setTitle("Mesh laden");
@@ -204,7 +219,9 @@ public class TestRoom
 			//Clock im Raum Anordnen
 			clock.setRotation(pi/2, pi/2, 0);
 			clock.setTranslation(-10, 10, 10);
-			cc = new ClockController("Uhr", 13 , 11, zeiger_stunden.getChannel(AbstSpatial.ROTATION), zeiger_minuten.getChannel(AbstSpatial.ROTATION));
+			
+			// lochour = Stunden
+			cc = new ClockController("Uhr", lochour , locmin, zeiger_stunden.getChannel(AbstSpatial.ROTATION), zeiger_minuten.getChannel(AbstSpatial.ROTATION));
 			//cc.setRate(1000);
 			
 			world.attachChild(clock);
