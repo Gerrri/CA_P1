@@ -52,7 +52,7 @@ public class ClockController extends AbstController {
 			// -pi/10800  							=> bewegung Pro Sekunde des Stundenzeigers
 			// getLocalTime(time)+(start_h*60*60) 	=> Akutell verstrichene Zeit + Start wert der Uhr (in Sekunden)
 			// +pi-(start_m*pi/360) 				=> + verschiebung um 180 grad - eingestellte Minutenanzahl 
-			t_h = Mat4.rotationY(-pi/10800*(getLocalTime(time)+(start_h*1800))+pi-(start_m*pi/360)); 
+			t_h = Mat4.rotationY(-pi/21600*(getLocalTime(time)+(start_h*3600))+pi-(start_m*pi/360)); 
 			h_mat4.set(t_h);
 			
 			

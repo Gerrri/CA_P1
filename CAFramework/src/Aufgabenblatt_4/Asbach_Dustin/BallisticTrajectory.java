@@ -146,8 +146,8 @@ public class BallisticTrajectory
 		controllers.add(new CameraController(camera.getChannel(AbstCamera.TRANSLATION), 
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp())); 
 		
-		VisualHelp.makeTimeGrid(world, 20, 10);
-		VisualHelp.markTimeOnGrid(10f);
+		//VisualHelp.makeTimeGrid(world, 20, 10);
+		//VisualHelp.markTimeOnGrid(10f);
 		world.attachChild(kugeln);
 		world = VisualHelp.makeGrid(world, 30);
 		
