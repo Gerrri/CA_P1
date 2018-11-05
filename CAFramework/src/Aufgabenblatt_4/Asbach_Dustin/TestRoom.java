@@ -63,7 +63,7 @@ public class TestRoom
 	/**
 	 * Gruppen für Elemente
 	 */
-	private float pi = 3.14159265359f;
+	private float pi = (float) Math.PI;
 	
 	private Group Sideboard = new Group("sideboard");
 	private Group Table = new Group("table");
@@ -205,7 +205,7 @@ public class TestRoom
 			clock.setRotation(pi/2, pi/2, 0);
 			clock.setTranslation(-10, 10, 10);
 			cc = new ClockController("Uhr", 13 , 11, zeiger_stunden.getChannel(AbstSpatial.ROTATION), zeiger_minuten.getChannel(AbstSpatial.ROTATION));
-			cc.setRate(1000);
+			//cc.setRate(1000);
 			
 			world.attachChild(clock);
 			
