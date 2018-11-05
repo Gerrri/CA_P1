@@ -183,8 +183,8 @@ public class BallisticTrajectory
 	 * Gameloop
 	 */
 	private  void gameLoop() {
-		//final int FPS = 25;					// frames per second				//modifiziert !
-		final int deltaTime = 1000/20;		// delta time 20 milliseconds			//modifiziert !
+		final int FPS = 20;					// frames per second				//modifiziert !
+		final int deltaTime = 1000/FPS;		// delta time 20 milliseconds			//modifiziert !
 		long updateRealTime;
 		long sleepTime;						// time to wait until next frame
 		long animationTime;					// animation time in milliseconds (starts at 0)
