@@ -1,4 +1,4 @@
-package Aufgabenblatt_5.Asbach_Dustin;
+package Aufgabenblatt_5.Asbach_Dustin.rocket;
 
 import animation.AbstController;
 import math.Vec3;

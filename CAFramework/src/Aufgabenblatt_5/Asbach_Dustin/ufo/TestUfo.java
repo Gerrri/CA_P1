@@ -1,5 +1,5 @@
 
-package Aufgabenblatt_5.Asbach_Dustin;
+package Aufgabenblatt_5.Asbach_Dustin.ufo;
 
 import java.util.ArrayList;
 

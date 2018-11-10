@@ -1,4 +1,4 @@
-package Aufgabenblatt_5.Asbach_Dustin;
+package Aufgabenblatt_5.Asbach_Dustin.ufo;
 
 import math.Vec3;
 import math.function.FunctionR1Vec3;
