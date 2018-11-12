@@ -1,5 +1,13 @@
 
-package Aufgabenblatt_5.Asbach_Dustin.ufo;
+package Aufgabenblatt_5.Asbach_Dustin;
+
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 5
+*Aufgabe : 5.1
+**/
 
 import java.util.ArrayList;
 
@@ -102,7 +110,7 @@ public class TestUfo {
 		
 		//world = VisualHelp.makeGrid(world,20);
 		world = VisualHelp.makePath(world,tk);
-		world = VisualHelp.makePath(world, looping);
+		//world = VisualHelp.makePath(world, looping);
 		renderer.setCamera(cam);
 		renderer.setCamera(ufo_cam);
 	}

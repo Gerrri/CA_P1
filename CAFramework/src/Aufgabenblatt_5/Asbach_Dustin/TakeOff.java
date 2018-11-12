@@ -1,6 +1,12 @@
-package Aufgabenblatt_5.Asbach_Dustin.rocket;
+package Aufgabenblatt_5.Asbach_Dustin;
 
-import javax.swing.text.Position;
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 5
+*Aufgabe : 5.2
+**/
 
 import math.Vec3;
 import math.function.FunctionR1Vec3;
