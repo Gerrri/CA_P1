@@ -77,7 +77,7 @@ public class TestRocket {
 		world.attachChild(ufo);
 		
 		// TakeOff + Controller			TakeOff(beschleunigung, dauer1, start, dauer2, tmin,tmax
-		TakeOff to = new TakeOff(new Vec3(0, 0.2f, 0), 2.0f, new Vec3(0,0,0), 3.0f, 0, 15);
+		TakeOff to = new TakeOff(new Vec3(0, 0.1f, 0), 2.0f, new Vec3(0,0,0), 1.0f, 0, 15);
 		rocket_ctl = new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, ufo.getChannel(AbstSpatial.TRANSLATION),to);
 		
 		
@@ -112,7 +112,7 @@ public class TestRocket {
 	 * Gameloop
 	 */
 	private  void gameLoop() {
-		final int FPS = 25;					// frames per second
+		final int FPS = 60;					// frames per second
 		final int deltaTime = 1000/FPS;		// delta time in milliseconds
 		long updateRealTime;
 		long sleepTime;						// time to wait until next frame

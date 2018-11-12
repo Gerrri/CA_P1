@@ -1,5 +1,7 @@
 package Aufgabenblatt_5.Asbach_Dustin.rocket;
 
+import javax.swing.text.Position;
+
 import math.Vec3;
 import math.function.FunctionR1Vec3;
 
@@ -16,7 +18,7 @@ public class TakeOff extends FunctionR1Vec3{
 	float phase1End;		//zeit1
 	float phase2End;		//zeit2
 	Vec3 position;			//aktuelle posisiton
-	
+
 	
 	public TakeOff(Vec3 accPhase1, float durationPhase1, Vec3 posStart, float durationPhase2, float tmin, float tmax) {
 		
@@ -47,8 +49,9 @@ public class TakeOff extends FunctionR1Vec3{
 		else if (t>phase1End && t<phase2End) {	//Phase2
 			position.add(new Vec3(velocityPhase2).mul(t));
 		}
-		else if (t>phase2End) {					//Phase3
-			
+		
+		else if (t>phase2End) {	//Phase3
+			position.add(new Vec3(velocityPhase3).mul(t));
 		}
 		
 		
