@@ -93,7 +93,7 @@ public class TestBillard {
 		final float[] t = {6, 12, 14, 15, 17};
 		
 		PolygonVec3 curve = new PolygonVec3(points, grid);
-		ParamTrans pt = new ParamTrans(0, 30, grid,t);
+		ParamTrans pt = new ParamTrans(0, 17, grid,t);
 		FunctionR1Vec3 newcurve = FunctionR1Vec3Util.compose(curve, pt);
 		
 		// Reparametrization
@@ -105,7 +105,7 @@ public class TestBillard {
 		
 		// HideController will hide the ball at the global start time
 		AbstController hc = new HideController (obj.getChannel(AbstNode.HIDDEN));
-		hc.setGlobalStartTime(24.5f);
+		hc.setGlobalStartTime(17.3f);
 		controllers.add(hc);
 		
 		world = VisualHelp.makeGrid(world, 10);

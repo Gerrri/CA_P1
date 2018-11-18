@@ -4,14 +4,15 @@ import math.function.FunctionR1R1;
 import math.function.FunctionR1Vec3Util;
 
 public class ParamTrans extends FunctionR1R1 {
-	private float[] ti;
 	private float[] si;
+	private float[] ti;
+	int i;
 	
 	
 	public ParamTrans(float tmin, float tmax, float[] si, float[] ti) {
 		super(tmin, tmax);
-		this.ti = ti;
-		this.si= si;
+		this.si = si;
+		this.ti= ti;
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -20,25 +21,34 @@ public class ParamTrans extends FunctionR1R1 {
 	public float eval(float t) {
 		float ret = 0;
 		
-		if(t<6){
-			ret = ((ti[1]-ti[0])/(si[1]-si[0]))*(t-si[0])+ti[0];	
+		
+		if(t>ti[0] && t<=ti[1])			{i=0;}
+		else if(t>ti[1] && t<=ti[2])	{i=1;}
+		else if(t>ti[2] && t<=ti[3])	{i=2;}
+		else if(t>ti[3] && t<=ti[4])	{i=3;}
+		
+		ret = ((si[1+i]-si[0+i])/(ti[1+i]-ti[0+i]))*(t-ti[0+i])+si[0+i];	
+		
+		
+		/*// ist da gleiche wie oben, nur in ausführlich
+		if	(t>ti[0] && t<=ti[1]){
+			ret = ((si[1]-si[0])/(ti[1]-ti[0]))*(t-ti[0])+si[0];	
 		}
 		
-		else if(t>6 && t<12){
-			ret = ((ti[2]-ti[1])/(si[2]-si[1]))*(t-si[1])+ti[1];	
+		else if(t>ti[1] && t<=ti[2]){
+			ret = ((si[2]-si[1])/(ti[2]-ti[1]))*(t-ti[1])+si[1];	
 		}
 		
-		else if(t>12 && t<18){
-			ret = ((ti[3]-ti[2])/(si[3]-si[2]))*(t-si[2])+ti[2];	
+		else if(t>ti[2] && t<=ti[3]){
+			ret = ((si[3]-si[2])/(ti[3]-ti[2]))*(t-ti[2])+si[2];	
 		}
 		
-		else if(t>18 && t<24){
-			ret = ((ti[4]-ti[3])/(si[4]-si[3]))*(t-si[3])+ti[3];	
+		else if(t>ti[3] && t<=ti[4]){
+			ret = ((si[4]-si[3])/(ti[4]-ti[3]))*(t-ti[3])+si[3];	
 		}
+		*/
 		
 		
-		
-		// TODO Auto-generated method stub
 		return ret;
 	}
 	
