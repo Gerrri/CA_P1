@@ -89,26 +89,19 @@ public class TestBillard {
 				new Vec3( 	17,		12.3f, 	2		),
 				new Vec3(	0,		12.3f, 	8.5f	)};
 		
+		final float[] grid = {0, 6, 12, 18, 24};
+		final float[] t = {6, 12, 14, 15, 17};
 		
-		ParamTrans pt = new ParamTrans(0, 6);
-		
-		
-		//final float[] grid = {0, 6, 12, 18, 24};
-		//				      pt.trans(s0, s1, t0, t1, t)
-		final float[] grid = {pt.trans(0, 6, 6, 12, 0), 
-							  pt.trans(6, 12, 12, 14, 6), 
-							  pt.trans(12, 18, 14, 15, 12), 
-							  pt.trans(18, 24, 15, 17, 18),
-							  pt.trans(18, 24, 15, 17, 24)};
 		PolygonVec3 curve = new PolygonVec3(points, grid);
-		
+		ParamTrans pt = new ParamTrans(0, 30, grid,t);
+		FunctionR1Vec3 newcurve = FunctionR1Vec3Util.compose(curve, pt);
 		
 		// Reparametrization
 		// Compose curve with reparametrization
 		
 		
 		controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, 
-				obj.getChannel("Translation"), curve));
+				obj.getChannel("Translation"), newcurve));
 		
 		// HideController will hide the ball at the global start time
 		AbstController hc = new HideController (obj.getChannel(AbstNode.HIDDEN));
@@ -116,7 +109,7 @@ public class TestBillard {
 		controllers.add(hc);
 		
 		world = VisualHelp.makeGrid(world, 10);
-		world = VisualHelp.makePath(world, curve);
+		world = VisualHelp.makePath(world, newcurve);
 	}
 
 	
