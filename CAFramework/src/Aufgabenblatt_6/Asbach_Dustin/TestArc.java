@@ -13,6 +13,10 @@ import java.util.ArrayList;
 
 import math.MathUtil;
 import math.Vec3;
+import math.function.ArcLengthTrafoBuilder;
+import math.function.FunctionR1R1;
+import math.function.FunctionR1Vec3;
+import math.function.FunctionR1Vec3Util;
 import math.function.util.SinFunc;
 import renderer.AbstRenderer;
 import renderer.Ogl3Renderer;
@@ -86,13 +90,38 @@ public class TestArc {
 		SinFunc curve = new SinFunc(10,freq,0);
 		curve.setTMin(0);
 		curve.setTMax(max);
-					
+		
+		//Parametrisieren nach der Bogenlänge
+		ArcLengthTrafoBuilder altf = new ArcLengthTrafoBuilder(curve, 100, 0, max/2);
+		
+		ArcLengthTrafoBuilder altf2 = new ArcLengthTrafoBuilder(curve, 100, max/2, max);
+		
+		
+		FunctionR1Vec3 func = FunctionR1Vec3Util.compose(altf2.getArcLengthParamCurve(), new FunctionR1R1(0, max) {
+			
+			@Override
+			public float eval(float t) {
+				float temp;
+				
+				temp = 3*t;
+				
+				return temp;
+			}
+		});
+		
+		
+		
+		
 		// create controller to move sphere along the sinus curve
 		controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, 
-				obj.getChannel("Translation"), curve));
+				obj.getChannel("Translation"), func));
+		
 		
 		world = VisualHelp.makeGrid(world, 10);
-		world = VisualHelp.makePath(world, curve);
+		world = VisualHelp.makePath(world, func);
+		//world = VisualHelp.makePath(world, altf.getArcLengthParamCurve());
+		//world = VisualHelp.makePath(world, altf2.getArcLengthParamCurve());
+		
 	}
 
 	
