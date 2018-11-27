@@ -17,6 +17,7 @@ import math.function.ArcLengthTrafoBuilder;
 import math.function.FunctionR1R1;
 import math.function.FunctionR1Vec3;
 import math.function.FunctionR1Vec3Util;
+import math.function.FunctionVec3Vec3;
 import math.function.util.SinFunc;
 import renderer.AbstRenderer;
 import renderer.Ogl3Renderer;
@@ -92,35 +93,53 @@ public class TestArc {
 		curve.setTMax(max);
 		
 		//Parametrisieren nach der Bogenlänge
+		
+	
 		ArcLengthTrafoBuilder altf = new ArcLengthTrafoBuilder(curve, 100, 0, max/2);
 		
 		ArcLengthTrafoBuilder altf2 = new ArcLengthTrafoBuilder(curve, 100, max/2, max);
 		
 		
-		FunctionR1Vec3 func = FunctionR1Vec3Util.compose(altf2.getArcLengthParamCurve(), new FunctionR1R1(0, max) {
-			
+		
+		ArcLengthTrafoBuilder a3 = new ArcLengthTrafoBuilder(curve, 100, 0, max);
+		float Len = a3.getArcLength();
+		
+		FunctionR1Vec3 f3 = FunctionR1Vec3Util.compose(a3.getArcLengthParamCurve(), new FunctionR1R1(0,20) {
+			float temp=0;
 			@Override
 			public float eval(float t) {
-				float temp;
 				
-				temp = 3*t;
+				if(t < (Len / 2) ) {
+					temp = t;
+				}else {
+					temp = (Len / 2) + (t - (Len / 2)) * t;
+					
+					if(temp>Len) {
+						temp = Len;
+					}
+					
+				}
 				
+				// TODO Auto-generated method stub
 				return temp;
 			}
-		});
+		}); 
 		
 		
 		
 		
+	
 		// create controller to move sphere along the sinus curve
 		controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, 
-				obj.getChannel("Translation"), func));
+				obj.getChannel("Translation"), f3));
+
+		
+
 		
 		
 		world = VisualHelp.makeGrid(world, 10);
-		world = VisualHelp.makePath(world, func);
-		//world = VisualHelp.makePath(world, altf.getArcLengthParamCurve());
-		//world = VisualHelp.makePath(world, altf2.getArcLengthParamCurve());
+		world = VisualHelp.makePath(world, a3.getArcLengthParamCurve());
+
 		
 	}
 
@@ -143,7 +162,7 @@ public class TestArc {
 	 * Gameloop
 	 */
 	private  void gameLoop() {
-		final int FPS = 25;					// frames per second
+		final int FPS = 60;					// frames per second
 		final int deltaTime = 1000/FPS;		// delta time in milliseconds
 		long updateRealTime;
 		long sleepTime;						// time to wait until next frame
