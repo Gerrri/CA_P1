@@ -93,14 +93,6 @@ public class TestArc {
 		curve.setTMax(max);
 		
 		//Parametrisieren nach der Bogenlänge
-		
-	
-		ArcLengthTrafoBuilder altf = new ArcLengthTrafoBuilder(curve, 100, 0, max/2);
-		
-		ArcLengthTrafoBuilder altf2 = new ArcLengthTrafoBuilder(curve, 100, max/2, max);
-		
-		
-		
 		ArcLengthTrafoBuilder a3 = new ArcLengthTrafoBuilder(curve, 100, 0, max);
 		float Len = a3.getArcLength();
 		
@@ -133,9 +125,6 @@ public class TestArc {
 		controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, 
 				obj.getChannel("Translation"), f3));
 
-		
-
-		
 		
 		world = VisualHelp.makeGrid(world, 10);
 		world = VisualHelp.makePath(world, a3.getArcLengthParamCurve());
