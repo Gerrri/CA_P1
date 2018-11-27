@@ -6,7 +6,7 @@ package Aufgabenblatt_6.Asbach_Dustin;
 *Name , Vorname : Asbach , Dustin
 *Matrikelnummer : 11117108
 *Aufgabenblatt : 5
-*Aufgabe : 5.2
+*Aufgabe : 6.2
 **/
 
 import java.util.ArrayList;

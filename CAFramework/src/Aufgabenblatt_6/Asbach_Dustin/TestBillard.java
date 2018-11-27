@@ -1,6 +1,14 @@
 
 package Aufgabenblatt_6.Asbach_Dustin;
 
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 5
+*Aufgabe : 6.1
+**/
+
 import java.util.ArrayList;
 
 import math.Vec3;
@@ -102,6 +110,8 @@ public class TestBillard {
 		
 		controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, 
 				obj.getChannel("Translation"), newcurve));
+		
+		
 		
 		// HideController will hide the ball at the global start time
 		AbstController hc = new HideController (obj.getChannel(AbstNode.HIDDEN));

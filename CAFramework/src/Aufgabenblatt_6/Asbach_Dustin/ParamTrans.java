@@ -1,5 +1,13 @@
 package Aufgabenblatt_6.Asbach_Dustin;
 
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 5
+*Aufgabe : 6.1
+**/
+
 import math.function.FunctionR1R1;
 import math.function.FunctionR1Vec3Util;
 
