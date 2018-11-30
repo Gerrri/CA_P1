@@ -174,11 +174,11 @@ public class TestBezier
 			PiecewiseLinear trafo4 = new PiecewiseLinear(t4, grid4);
 			FunctionR1Vec3 s4_prime = FunctionR1Vec3Util.compose(s4, trafo4);
 
-			
-			world = VisualHelp.makePath(world, FunctionR1Vec3Util.connect(s1_prime,s2_prime,s3_prime,s4_prime));
-			
-			controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), FunctionR1Vec3Util.connect(s1_prime,s2_prime,s3_prime,s4_prime)));
-			
+		
+		world = VisualHelp.makePath(world, FunctionR1Vec3Util.connect(s1_prime,s2_prime,s3_prime,s4_prime));
+		
+		controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), FunctionR1Vec3Util.connect(s1_prime,s2_prime,s3_prime,s4_prime)));
+		
 			
 
 		
