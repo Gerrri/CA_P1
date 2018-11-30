@@ -13,7 +13,10 @@ package Aufgabenblatt_7.Asbach_Dustin;
 import java.util.ArrayList;
 
 import math.Vec3;
+import math.function.FunctionR1Vec3;
+import math.function.FunctionR1Vec3Util;
 import math.function.util.BezierCurve;
+import math.function.util.PiecewiseLinear;
 import renderer.AbstRenderer;
 import renderer.Ogl3Renderer;
 import scenegraph.AbstCamera;
@@ -103,9 +106,9 @@ public class TestBezier
 			vec_points1[2] = new Vec3(0, 0.01f, -2);
 			
 			BezierCurve s1 = new BezierCurve(vec_points1);
-			world = VisualHelp.makePath(world, s1);
+			//world = VisualHelp.makePath(world, s1);
 			
-			controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), s1));
+			//controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), s1));
 			
 		
 		// s2
@@ -115,9 +118,9 @@ public class TestBezier
 			vec_points2[2] = new Vec3(2.5f, 0.01f, 0);
 			
 			BezierCurve s2 = new BezierCurve(vec_points2);
-			world = VisualHelp.makePath(world, s2);
+			//world = VisualHelp.makePath(world, s2);
 			
-			controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), s2));
+			//controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), s2));
 			
 			
 		// s3
@@ -127,9 +130,9 @@ public class TestBezier
 			vec_points3[2] = new Vec3(0, 0.01f, 2);
 			
 			BezierCurve s3 = new BezierCurve(vec_points3);
-			world = VisualHelp.makePath(world, s3);
+			//world = VisualHelp.makePath(world, s3);
 			
-			controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), s3));
+			//controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), s3));
 			
 		// s4
 			Vec3 vec_points4[] = new Vec3[3];
@@ -138,11 +141,43 @@ public class TestBezier
 			vec_points4[2] = new Vec3(-2.5f, 0.01f, 6);
 			
 			BezierCurve s4 = new BezierCurve(vec_points4);
-			world = VisualHelp.makePath(world, s4);
+			//world = VisualHelp.makePath(world, s4);
 			
-			controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), s4));
+			//
 			
-				
+		
+		// Zusammen setzen
+			
+			float i = 2; // verzögerung beim start
+			
+			// shift s1 in time to interval [0,3]
+			float[] t1 = { 0.0f, 1.0f };
+			float[] grid1 = { 0.0f+i, 3.0f+i };
+			PiecewiseLinear trafo1 = new PiecewiseLinear(t1, grid1);
+			FunctionR1Vec3 s1_prime = FunctionR1Vec3Util.compose(s1, trafo1);
+			
+			// shift s2 in time to interval [3,6]
+			float[] t2 = { 0.0f, 1.0f };
+			float[] grid2 = { 3.0f+i, 6.0f+i };
+			PiecewiseLinear trafo2 = new PiecewiseLinear(t2, grid2);
+			FunctionR1Vec3 s2_prime = FunctionR1Vec3Util.compose(s2, trafo2);
+			
+			// shift s3 in time to interval [6,9]
+			float[] t3 = { 0.0f, 1.0f };
+			float[] grid3 = { 6.0f+i, 9.0f+i };
+			PiecewiseLinear trafo3 = new PiecewiseLinear(t3, grid3);
+			FunctionR1Vec3 s3_prime = FunctionR1Vec3Util.compose(s3, trafo3);
+			
+			// shift s4 in time to interval [9,12]
+			float[] t4 = { 0.0f, 1.0f };
+			float[] grid4 = { 9.0f+i, 12.0f+i };
+			PiecewiseLinear trafo4 = new PiecewiseLinear(t4, grid4);
+			FunctionR1Vec3 s4_prime = FunctionR1Vec3Util.compose(s4, trafo4);
+
+			
+			world = VisualHelp.makePath(world, FunctionR1Vec3Util.connect(s1_prime,s2_prime,s3_prime,s4_prime));
+			
+			controllers.add( new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, bird.getChannel("Translation"), FunctionR1Vec3Util.connect(s1_prime,s2_prime,s3_prime,s4_prime)));
 			
 			
 
