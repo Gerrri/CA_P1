@@ -10,6 +10,15 @@
 
 package Aufgabenblatt_7.Asbach_Dustin;
 
+
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 7
+*Aufgabe : 7.1
+**/
+
 import java.util.ArrayList;
 
 import math.Vec3;
