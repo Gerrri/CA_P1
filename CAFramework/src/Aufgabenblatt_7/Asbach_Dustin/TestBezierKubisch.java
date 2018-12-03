@@ -102,8 +102,8 @@ public class TestBezierKubisch
 		// s1
 			Vec3 vec_points1[] = new Vec3[4];
 			vec_points1[0] = new Vec3(-6, 0.01f, -2);
-			vec_points1[1] = new Vec3(2.5f, 0.01f, -2.2f);
-			vec_points1[2] = new Vec3(2.5f, 0.01f, -2.2f);
+			vec_points1[1] = new Vec3(0f, 0.01f, -2f);
+			vec_points1[2] = new Vec3(2.5f, 0.01f, -4f);
 			vec_points1[3] = new Vec3(2.5f, 0.01f, 0);
 			
 			BezierCurve s1 = new BezierCurve(vec_points1);
@@ -112,7 +112,7 @@ public class TestBezierKubisch
 		// s2
 			Vec3 vec_points2[] = new Vec3[4];
 			vec_points2[0] = new Vec3(2.5f, 0.01f, 0);
-			vec_points2[1] = new Vec3(2.5f, 0.01f, 4.4f);
+			vec_points2[1] = new Vec3(2.5f, 0.01f, 4f);
 			vec_points2[2] = new Vec3(-3f, 0.01f, -1f);
 			vec_points2[3] = new Vec3(-2.5f, 0.01f, 6);
 			
