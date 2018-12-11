@@ -1,11 +1,4 @@
 /rm_scenegraph/
-/.classpath
-/.gitignore
-/.project
-/Aufgabenblatt_1/
-/Aufgabenblatt_2/
-/Aufgabenblatt_3/
-/Aufgabenblatt_4/
 /animation/
 /examples/
 /math/
@@ -13,7 +6,5 @@
 /renderer/
 /scenegraph/
 /util/
-/Aufgabenblatt_5/
-/Ufo/
-/Aufgabenblatt_6/
-/Aufgabenblatt_7/
+/asd/
+/Aufgabenblatt_8/
