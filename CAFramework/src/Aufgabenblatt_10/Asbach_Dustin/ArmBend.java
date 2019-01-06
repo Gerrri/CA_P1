@@ -8,7 +8,7 @@
  * and use in source and binary forms, with or without modification, requires explicit permission. 
  */
 
-package examples.skinning;
+package Aufgabenblatt_10.Asbach_Dustin;
 
 import java.util.ArrayList;
 
@@ -58,7 +58,6 @@ public class ArmBend
 	 */
 	private final AbstRenderer renderer;
 	private final ArrayList<AbstController> controllers;
-	private ArrayList<Joint> arr_j;
 
 	private AbstLight light;
 	
@@ -100,9 +99,6 @@ public class ArmBend
 		int slices = 10;
 		int stacks = 4;
 		
-		
-		arr_j = new ArrayList<>();
-		
 		// Create arm mesh in bind pose
 		Cylinder arm = new Cylinder("Arm", 1, armLen, slices, stacks);
 		arm.setWireframe(true);
@@ -110,22 +106,8 @@ public class ArmBend
 		world.attachChild(new ColorState(Color.white()));
 		
 		// Create shoulder joint, attach it to scene and add it to an array of joints
-		Joint shoul_joint = new Joint("Shoulder_Joint");
-		shoul_joint.setTranslation(0, 4, 0);
-		shoul_joint.attachSkeleton();
-		world.attachChild (shoul_joint);
-		arr_j.add(shoul_joint);
 		
 		// Create elbow joint, attach it to scene and add it to an array of joints
-		Joint elb_joint = new Joint("Elbow_Joint");
-		elb_joint.setTranslation(0, 0.5f, 0);
-		
-		//elbow joint als Kind hinzufügen
-		shoul_joint.attachChild(elb_joint);
-		
-		world.attachChild (elb_joint);
-		arr_j.add(elb_joint);
-		
 		
 		world.updateWorldTransform(new Mat4());		// calculate transformation matrices of hierarchy
 		Vec3Array vertices = arm.meshData().vertices();

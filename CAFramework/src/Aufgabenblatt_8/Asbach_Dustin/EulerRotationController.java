@@ -40,7 +40,7 @@ public class EulerRotationController extends AbstController {
 	}
 
 	public boolean update(float time) {
-		// nur wenn sich was gändert hat
+		// nur wenn sich was gändert hat-
 		if (!super.update(time)) {
 			return false;
 		}
@@ -53,7 +53,6 @@ public class EulerRotationController extends AbstController {
 				Mat4 rotatation = Mat4.rotationZ(linear.eval(localTime).z)
 						.mul(Mat4.rotationY(linear.eval(localTime).y)
 						.mul(Mat4.rotationX(linear.eval(localTime).x)));
-
 			
 				Mat4 Data = (Mat4) channel.getData();
 				Data.set(rotatation);
