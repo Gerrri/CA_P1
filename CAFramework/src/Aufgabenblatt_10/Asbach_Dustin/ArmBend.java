@@ -162,11 +162,11 @@ public class ArmBend
 
 		/*
 		for(int i=0; i<79;i++) {
-			if(i<45) {			
+			if(i<16) {			
 				indices[i][0]=0;
 				indices[i][1]=0;
 				
-			}else {
+			}else if (i<32) {
 				indices[i][0]=1;
 				indices[i][1]=1;
 			
