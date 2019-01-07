@@ -124,7 +124,7 @@ public class TestBlending
 		
 		// 3) use FunctionR1R1Controller to control the channel "WEIGHT_0" of the
 		//    blendshape and use the chosen interpolation function
-		FunctionR1R1Controller fc = new FunctionR1R1Controller(AbstController.RepeatType.CLAMP, blend.getChannel("WEIGHT_0"), inter);
+		FunctionR1R1Controller fc = new FunctionR1R1Controller(AbstController.RepeatType.OSCILLATE, blend.getChannel("WEIGHT_0"), inter);
 		
 		// 4) add this controller to the list of controllers
 		controllers.add(fc);
