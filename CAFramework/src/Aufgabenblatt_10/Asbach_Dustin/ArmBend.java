@@ -12,6 +12,8 @@ package Aufgabenblatt_10.Asbach_Dustin;
 
 import java.util.ArrayList;
 
+import javax.naming.InitialContext;
+
 import math.Mat4;
 import math.Vec3;
 import renderer.AbstRenderer;
@@ -58,6 +60,7 @@ public class ArmBend
 	 */
 	private final AbstRenderer renderer;
 	private final ArrayList<AbstController> controllers;
+	private ArrayList<Joint> joint_array;
 
 	private AbstLight light;
 	
@@ -99,6 +102,9 @@ public class ArmBend
 		int slices = 10;
 		int stacks = 4;
 		
+		
+		joint_array = new ArrayList<>();
+		
 		// Create arm mesh in bind pose
 		Cylinder arm = new Cylinder("Arm", 1, armLen, slices, stacks);
 		arm.setWireframe(true);
@@ -106,8 +112,20 @@ public class ArmBend
 		world.attachChild(new ColorState(Color.white()));
 		
 		// Create shoulder joint, attach it to scene and add it to an array of joints
+		Joint shoul_joint = new Joint("Shoulder_Joint");
+		shoul_joint.setTranslation(0, 4, 0);
+		shoul_joint.attachSkeleton();
+		world.attachChild (shoul_joint);
+		joint_array.add(shoul_joint);
 		
 		// Create elbow joint, attach it to scene and add it to an array of joints
+		Joint elb_joint = new Joint("Elbow_Joint");
+		elb_joint.setTranslation(0, 0, 0);
+			//elbow joint als Kind hinzufügen
+			shoul_joint.attachChild(elb_joint);
+		world.attachChild (elb_joint);
+		joint_array.add(elb_joint);
+		
 		
 		world.updateWorldTransform(new Mat4());		// calculate transformation matrices of hierarchy
 		Vec3Array vertices = arm.meshData().vertices();
@@ -118,16 +136,75 @@ public class ArmBend
 		int [][] indices = new int [numVertices][numWeights];
 		
 		// Set weights and indices per vertex
+
 		
+		
+		//Grenze zwischne onerem und unteren vertices,
+		//schwierig die richtigen werte zu finden
+		
+		
+		for(int i=0; i<79;i++) {
+			if(i<45) {
+				weights[i][0]=0;
+				weights[i][1]=1;
+				
+				indices[i][0]=1;
+				indices[i][1]=0;
+			}else {
+				weights[i][0]=1;
+				weights[i][1]=1;
+				
+				indices[i][0]=0;
+				indices[i][1]=1;
+			}
+		}
+		
+
+		/*
+		for(int i=0; i<79;i++) {
+			if(i<45) {			
+				indices[i][0]=0;
+				indices[i][1]=0;
+				
+			}else {
+				indices[i][0]=1;
+				indices[i][1]=1;
+			
+			}/*else if(i<48){
+				indices[i][0]=1;
+				indices[i][1]=1;
+		
+			}else if(i<64){
+				indices[i][0]=1;
+				indices[i][1]=1;
+				
+			}else if(i<80){
+				indices[i][0]=1;
+				indices[i][1]=1;	
+			}
+		*/
+		
+
+
+				
 		// Create skin cluster
+		SkinCluster sc = new SkinCluster(vertices, weights, indices, numWeights);
 		
-		// Set Bind Pose of joints 
+		// Set Bind Pose of joints
+		sc.bindJoints(joint_array);
 
 		// Set skin cluster as Mesh for arm
+
+		arm.setMeshData(sc);
+		
 		
 		world = VisualHelp.makeGrid(world, 7);
 		
+		
+		Channel[] ijc_channel = {shoul_joint.getChannel(AbstCamera.ROTATION), elb_joint.getChannel(AbstCamera.ROTATION)};
+		
 		controllers = new ArrayList<AbstController>();
+		controllers.add(new InteractiveJointController(ijc_channel));
 		controllers.add(new CameraController(camera.getChannel(AbstCamera.TRANSLATION), 
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp()));
 		
