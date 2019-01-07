@@ -139,50 +139,109 @@ public class ArmBend
 
 		
 		
-		//Grenze zwischne onerem und unteren vertices,
+
 		//schwierig die richtigen werte zu finden
 		
+		int f1=0,f2=0,f3=0,f4=0,f5=0;
 		
-		for(int i=0; i<79;i++) {
-			if(i<45) {
+	
+
+		for(int i=0; i<vertices.length(); i++) {
+			float v = vertices.at(i).y;
+			
+			if(v <=4 && v>2) {f1++;	}
+			else if(v <=2 && v>0) {f2++;}
+			else if(v <=0 && v>-2) {f3++;}
+			else if(v <=-2 && v>-4) {f4++;}
+		}
+		
+		f4 = f1+f2+f3+f4;
+		f3 = f1+f2+f3;
+		f2 = f1+f2;
+		
+		
+		
+		//Define 
+		//0 = Rigid Binding
+		//1 = Smooth Binding
+		int choice = 1;
+		
+		
+		for(int i=0; i<numVertices;i++) {
+		
+			// Rigid Binding
+		if(choice == 0) {
+			if(i<f1) {
+				weights[i][0]=1;
+				weights[i][1]=0;
+			}
+			else if(i<f2) {
+				weights[i][0]=1;
+				weights[i][1]=0;
+			}
+			else if(i<f3) {
 				weights[i][0]=0;
 				weights[i][1]=1;
+			}
+			else if(i<f4) {
+				weights[i][0]=0;
+				weights[i][1]=1;
+			}else {
+				weights[i][0]=0;
+				weights[i][1]=1;
+			}
+			
+			indices[i][0]=1;
+			indices[i][1]=0;
+		}	
+		
+		// Smooth Binding
+		if(choice == 1) {
+			if(i<f1) {
+				weights[i][0]=1;
+				weights[i][1]=0;
+			}
+			else if(i<f2) {
+				weights[i][0]=0.75f;
+				weights[i][1]=0.25f;
+			}
+			else if(i<f3) {
+				weights[i][0]=0.5f;
+				weights[i][1]=0.5f;
+			}
+			else if(i<f4) {
+				weights[i][0]=0.25f;
+				weights[i][1]=0.75f;
+			}else {
+				weights[i][0]=0;
+				weights[i][1]=1;
+			}
+			
+			indices[i][0]=1;
+			indices[i][1]=0;
+		}	
+			
+			
+			/*
+			if(i<45) {
+				weights[i][0]=1;
+				weights[i][1]=0;
 				
 				indices[i][0]=1;
 				indices[i][1]=0;
 			}else {
-				weights[i][0]=1;
+				weights[i][0]=0;
 				weights[i][1]=1;
 				
 				indices[i][0]=0;
 				indices[i][1]=1;
 			}
+			*/
+			
+			
+			
 		}
 		
-
-		/*
-		for(int i=0; i<79;i++) {
-			if(i<16) {			
-				indices[i][0]=0;
-				indices[i][1]=0;
-				
-			}else if (i<32) {
-				indices[i][0]=1;
-				indices[i][1]=1;
-			
-			}/*else if(i<48){
-				indices[i][0]=1;
-				indices[i][1]=1;
-		
-			}else if(i<64){
-				indices[i][0]=1;
-				indices[i][1]=1;
-				
-			}else if(i<80){
-				indices[i][0]=1;
-				indices[i][1]=1;	
-			}
-		*/
 		
 
 
@@ -201,14 +260,17 @@ public class ArmBend
 		world = VisualHelp.makeGrid(world, 7);
 		
 		
-		Channel[] ijc_channel = {shoul_joint.getChannel(AbstCamera.ROTATION), elb_joint.getChannel(AbstCamera.ROTATION)};
+		
 		
 		controllers = new ArrayList<AbstController>();
-		controllers.add(new InteractiveJointController(ijc_channel));
 		controllers.add(new CameraController(camera.getChannel(AbstCamera.TRANSLATION), 
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp()));
 		
 		// Get rotation channels for joints and add InteractiveJointController for the channels
+		Channel[] ijc_channel = {shoul_joint.getChannel(AbstCamera.ROTATION), elb_joint.getChannel(AbstCamera.ROTATION)};
+		controllers.add(new InteractiveJointController(ijc_channel));
+		
+		
 		
 		world.updateWorldData();
 	}
