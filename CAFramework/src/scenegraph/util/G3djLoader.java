@@ -948,15 +948,31 @@ public class G3djLoader
 		root.setRotationMatrix(new Mat4());
 		Mat4 newParentRotation = Mat4.mul(parentRotation, rotMatrix);
 		
-////	the head as the root of the face must be rotated in the original bind pose, 
-////	so that the keyframed animations fit
-//		if (root.getName().equals("Head"))
-//		{
-//			Group connector = new Group ("Connector");
-//			connector.setRotationMatrix(newParentRotation);
-//			connector.attachChild(root);
-//			root.getParent().attachChild(connector);
-//		}
+//	the head as the root of the face must be rotated in the original bind pose, 
+//	so that the keyframed animations fit
+		if (root.getName().equals("Head"))
+		{	
+			Joint connect = new Joint ("Connector");
+			connect.setTranslation (new Vec3());
+			connect.setRotationMatrix (Mat4.inverse(newParentRotation));
+			List<AbstNode> children = root.getChildren();
+
+			for (int i = 0; i < children.size(); i++)
+			{
+				AbstNode child = children.get(i);
+						
+				if (child instanceof Joint)
+				{
+					connect.attachChild(child);
+					child.setParent(connect);
+				}
+			}
+			connect.setParent(root);
+			root.detachAllChildren();
+			root.attachChild(connect);
+			
+			return;
+		}
 		
 
 		List<AbstNode> children = root.getChildren();
@@ -967,8 +983,6 @@ public class G3djLoader
 		for (int i = 0; i < children.size(); i++)
 		{
 			AbstNode child = children.get(i);
-
-					
 					
 			if (child instanceof Joint)
 				freezeRotationsBody((Joint) child, newParentRotation);
@@ -1016,13 +1030,29 @@ public class G3djLoader
 				jc.setRotChannel(node.getChannel(AbstSpatial.ROTATION));
 			}
 		}
-
-//		Joint bvhRoot = (Joint) clip.getSkeleton().getChild(1);
-//		JointController top = JointController.getByName(clip.getControllers(),
-//				bvhRoot.getName());
-//		top.liftTranslation((root.getTranslation()));
 	}
 
+	
+	public void overloadWithBVH (Joint root, BVHClip clip)
+	{
+		ArrayList<JointController> clipControllers = clip.getControllers();
+
+		for (JointController contr : clipControllers)
+		{
+			String name = contr.getName();
+			AbstNode node = root.searchNode(".*:?" + name);
+			if (node != null && node instanceof Joint)
+			{
+				Quaternion q = new Quaternion(((Joint)node).getRotationMatrix());
+				contr.setRotChannel(node.getChannel(AbstSpatial.ROTATION));
+				contr.setTransChannel(node.getChannel(AbstSpatial.TRANSLATION));
+				contr.startRotation(q);
+			}
+		}
+		
+		controllers.addAll(clipControllers);
+	}
+	
 	public void setBindPose(Joint node)
 	{
 		node.updateWorldTransform(node.getParent().getGlobalTransform());
@@ -1073,6 +1103,20 @@ public class G3djLoader
 			}
 		}
 	}
+	
+	public float getAnimationDuration()
+	{
+		if (animations.length > 0)
+			return animations[0].endTime;
+		else
+			return 0;
+	}
+	
+	public void setRepeatType(AbstController.RepeatType type)
+	{
+		for (AbstController controller : controllers)
+			controller.setRepeatType(type);
+	}
 
 	private void resetParents(Group fbxNode)
 	{
@@ -1089,5 +1133,6 @@ public class G3djLoader
 	{
 		return str.substring(1, str.length() - 1);
 	}
+	
 
 }
