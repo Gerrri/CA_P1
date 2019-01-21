@@ -12,7 +12,6 @@ package Aufgabenbaltt_12.Asbach_Dustin;
 
 import java.util.ArrayList;
 
-import math.Mat4;
 import math.Vec3;
 import animation.AbstController;
 import animation.CameraController;
@@ -23,10 +22,10 @@ import renderer.Ogl3Renderer;
 import scenegraph.*;
 import scenegraph.util.VisualHelp;
 import scenegraph.util.BVHClip;
-import scenegraph.util.G3djLoader;
+import scenegraph.util.BVHClip.Pose;
 import scenegraph.util.Loader;
 
-public class Aufgabe12_2
+public class Aufgabe12_3
 {
 	/**
 	 * flag is set, when program shall be terminated
@@ -54,7 +53,7 @@ public class Aufgabe12_2
 	/**
 	 * Test class for importing mesh into the world 
 	 */
-	public Aufgabe12_2(int width, int height)
+	public Aufgabe12_3(int width, int height)
 	{
 		// generate and initialize Renderer 
 		renderer = new Ogl3Renderer (width, height);
@@ -78,46 +77,64 @@ public class Aufgabe12_2
 		controllers.add(new CameraController(camera.getChannel(AbstCamera.TRANSLATION), 
 				camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp())); 
 		
+		//walking clip
+		BVHClip clip_walking = Loader.loadBVH ("gerri_walking.bvh");
+		clip_walking.setRepeatType(AbstController.RepeatType.CLAMP);
+
+		if (clip_walking != null)
+		{
+			clip_walking.extract(1, 5.59f);
+			
+			Group skeleton_walking = clip_walking.getSkeleton();
+			skeleton_walking.setScale (0.5f, 0.5f, 0.5f);
+			skeleton_walking.setTranslation(10, 0, 0);
+			world.attachChild (skeleton_walking);
+			
+			ArrayList<JointController> jointController_walking = clip_walking.getControllers();
+			controllers.addAll(jointController_walking);
+			//controllers.add(new TimeSliderController(jointController_walking, 400, 15, 5));
+		}
 		
 		
-		//g3dj
-			G3djLoader loader = new G3djLoader();
-			Group obj_g3dj = loader.read("Gerri_face_anim.g3dj");
-			loader.setRepeatType(AbstController.RepeatType.CLAMP);
+		//crouching clip
+		BVHClip clip_crouching = Loader.loadBVH ("gerri_walking_chair.bvh");
+		clip_crouching.setRepeatType(AbstController.RepeatType.CLAMP);
+
+		if (clip_crouching != null)
+		{
+			clip_crouching.extract(0, 10);
+			clip_crouching.schedule(0);
 			
-			obj_g3dj.setScale(0.5f, 0.5f, 0.5f);
-			obj_g3dj.setTranslation(10, 0, 0);
-			world.attachChild(obj_g3dj);
+			
+			Group skeleton_crouching = clip_crouching.getSkeleton();
+			skeleton_crouching.setScale (0.5f, 0.5f, 0.5f);
+			skeleton_crouching.setTranslation(10, 0, 0);
+			//world.attachChild (skeleton_crouching);
+			
+			ArrayList<JointController> jointController_crouching = clip_crouching.getControllers();
+			controllers.addAll(jointController_crouching);
+			controllers.add(new TimeSliderController(jointController_crouching, 400, 16, 5));
+		}
 		
-			ArrayList<JointController> jointController_g3dj = loader.getControllers();
-			controllers.addAll(jointController_g3dj);
-			//controllers.add(new TimeSliderController(jointController_g3dj, 400, 15, 5));
+		Pose bein_gehoben = clip_crouching.getPose(3.8f);
+		Pose lauf_anfang = clip_walking.getPose(1f);
+		Pose lauf_ende = clip_walking.getPose(2);
 		
-		//mit gesicht clip
-			BVHClip clip_mit_gesicht = Loader.loadBVH ("gerri_attacked_2.bvh");
-			clip_mit_gesicht.setRepeatType(AbstController.RepeatType.CLAMP);
-	
-			if (clip_mit_gesicht != null)
-			{
-				
-				clip_mit_gesicht.extract(3.67f, 13);
-				
-				Group skeleton_mit_gesicht = clip_mit_gesicht.getSkeleton();
-				skeleton_mit_gesicht.setScale (0.5f, 0.5f, 0.5f);
-				skeleton_mit_gesicht.setTranslation(10, 0, 0);
-				//world.attachChild (skeleton_mit_gesicht);
-				
-				ArrayList<JointController> jointController_walking = clip_mit_gesicht.getControllers();
-				controllers.addAll(jointController_walking);
-				controllers.add(new TimeSliderController(jointController_walking, 400, 15, 5));
-			}
-			
-		//Animation 
-			Joint j = new Joint("test");
-			j.attachChild(obj_g3dj.searchNode("master"));
-			
-			loader.setAnimation(j, clip_mit_gesicht);
-			
+		ArrayList<BVHClip.Pose> arl_bvhc = new ArrayList<>();
+		arl_bvhc.add(lauf_anfang);
+		arl_bvhc.add(bein_gehoben);
+		arl_bvhc.add(lauf_ende);
+		
+		
+		float[] timeGrid = {1.6f,1.8f,2.3f};
+		float[] scaledTimeGrid = {2,2.3f,3.8f};
+		
+		clip_walking.warp(arl_bvhc, timeGrid, scaledTimeGrid, 1);
+		
+		
+		
+		// kombinieren walking -> crouche
+		//clip_walking.combine(clip_crouching);
 		
 		world = VisualHelp.makeGrid (world, 10, 20);
 		renderer.setCamera (camera);
@@ -136,8 +153,6 @@ public class Aufgabe12_2
 				if (controllers.get(i).update(time))
 				{
 					world.updateTransform();
-					world.updateWorldTransform(new Mat4());
-					world.updateWorldData();
 				}
 			}
 		}
@@ -208,7 +223,7 @@ public class Aufgabe12_2
 		int width  = 1000;
 		int height = 600;
 							
-		Aufgabe12_2 demo   = new Aufgabe12_2( width, height );
+		Aufgabe12_3 demo   = new Aufgabe12_3( width, height );
 		demo.gameLoop();
 	}
 	
