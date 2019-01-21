@@ -83,7 +83,7 @@ public class Aufgabe12_3
 
 		if (clip_walking != null)
 		{
-			clip_walking.extract(1, 5.59f);
+			clip_walking.extract(1, 7f);
 			
 			Group skeleton_walking = clip_walking.getSkeleton();
 			skeleton_walking.setScale (0.5f, 0.5f, 0.5f);
@@ -105,7 +105,6 @@ public class Aufgabe12_3
 			clip_crouching.extract(0, 10);
 			clip_crouching.schedule(0);
 			
-			
 			Group skeleton_crouching = clip_crouching.getSkeleton();
 			skeleton_crouching.setScale (0.5f, 0.5f, 0.5f);
 			skeleton_crouching.setTranslation(10, 0, 0);
@@ -113,12 +112,12 @@ public class Aufgabe12_3
 			
 			ArrayList<JointController> jointController_crouching = clip_crouching.getControllers();
 			controllers.addAll(jointController_crouching);
-			controllers.add(new TimeSliderController(jointController_crouching, 400, 16, 5));
+			//controllers.add(new TimeSliderController(jointController_crouching, 400, 16, 5));
 		}
 		
 		Pose bein_gehoben = clip_crouching.getPose(3.8f);
-		Pose lauf_anfang = clip_walking.getPose(1f);
-		Pose lauf_ende = clip_walking.getPose(2);
+		Pose lauf_anfang = clip_walking.getPose(3.43f);
+		Pose lauf_ende = clip_walking.getPose(3.87f);
 		
 		ArrayList<BVHClip.Pose> arl_bvhc = new ArrayList<>();
 		arl_bvhc.add(lauf_anfang);
@@ -126,15 +125,10 @@ public class Aufgabe12_3
 		arl_bvhc.add(lauf_ende);
 		
 		
-		float[] timeGrid = {1.6f,1.8f,2.3f};
-		float[] scaledTimeGrid = {2,2.3f,3.8f};
+		float[] timeGrid = {3.43f,3.66f,3.87f};
+		float[] scaledTimeGrid = {3.33f,3.66f,3.99f};
 		
 		clip_walking.warp(arl_bvhc, timeGrid, scaledTimeGrid, 1);
-		
-		
-		
-		// kombinieren walking -> crouche
-		//clip_walking.combine(clip_crouching);
 		
 		world = VisualHelp.makeGrid (world, 10, 20);
 		renderer.setCamera (camera);

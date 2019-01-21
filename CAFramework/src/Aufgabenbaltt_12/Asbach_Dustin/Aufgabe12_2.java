@@ -91,7 +91,7 @@ public class Aufgabe12_2
 		
 			ArrayList<JointController> jointController_g3dj = loader.getControllers();
 			controllers.addAll(jointController_g3dj);
-			//controllers.add(new TimeSliderController(jointController_g3dj, 400, 15, 5));
+			controllers.add(new TimeSliderController(jointController_g3dj, 400, 15, 5));
 		
 		//mit gesicht clip
 			BVHClip clip_mit_gesicht = Loader.loadBVH ("gerri_attacked_2.bvh");
