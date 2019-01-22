@@ -54,7 +54,6 @@ public class Aufgabe12_1
 	 */
 	private final AbstRenderer renderer;
 	private final ArrayList<AbstController> controllers;
-
 	private AbstLight light;
 	
 	/**
