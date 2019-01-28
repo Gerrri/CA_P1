@@ -113,6 +113,7 @@ public class TestSpring {
 		int anz = 11;
 		
 		Channel c1_trans = null;
+		Vec3 c1_vec3 = null;
 		
 		for(int i =0;i<anz;i++) {
 			mat = new MaterialState ();
@@ -135,19 +136,20 @@ public class TestSpring {
 			particles.add(new Particle(mass, dummyGroup.getChannel("Translation"), new Vec3()));
 			
 			if(i==0) {
-				 c1_trans =dummyGroup.getChannel("Translation");
+				 c1_trans = dummyGroup.getChannel("Translation");
+				 c1_vec3 = dummyGroup.getTranslation();			
 			}
 						
 			
 		}
 		
 		//Kräfte von rechts nach links
-		for(int i=0;i<anz-1;i++) {
+		for(int i=1;i<anz-1;i++) {
 			forces.add(new DampedSpring(particles.get(i), particles.get(i+1), ks, kd, L));
 		}
 		
 		//Kräfte von links nach rechts
-		for(int i=anz-1;i>0;i--) {
+		for(int i=anz-2;i>0;i--) {
 			forces.add(new DampedSpring(particles.get(i), particles.get(i-1), ks, kd, L));
 		}
 		
@@ -160,7 +162,8 @@ public class TestSpring {
 		
 		//Keyboard Controller
 		KeyboardTranslationController ktc;
-		ktc = new KeyboardTranslationController(c1_trans, new Vec3(-5, 0, 0));
+		ktc = new KeyboardTranslationController(c1_trans, c1_vec3);
+		controllers.add(ktc);
 		
 		// create additional grid for visualization
 		world = VisualHelp.makeGrid(world, 5);
