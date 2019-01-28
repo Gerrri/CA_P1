@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import particles.DampedSpring;
 import particles.Force;
+import particles.Gravity;
 import particles.Particle;
 import particles.ParticleEulerController;
 import particles.ParticleSystem;
@@ -105,12 +106,13 @@ public class TestSpring {
 		float kd = 10f;
 		
 		float x_pos;
-		float mass=0.4f;
+		float mass=0.5f;
 		
 		//Create other Particles 1 to 10
 		MaterialState mat;
 		Group dummyGroup;
 		int anz = 11;
+		
 		
 		Channel c1_trans = null;
 		Vec3 c1_vec3 = null;
@@ -128,12 +130,17 @@ public class TestSpring {
 			
 			
 			dummyGroup = new Group("Cube_" + i+1);
-			dummyGroup.setTranslation(new Vec3(x_pos, 00.0f, 0.0f));
+			dummyGroup.setTranslation(new Vec3(x_pos, 4f, 0.0f));
 			dummyGroup.attachChild(massPoint);
 			world.attachChild(dummyGroup);
 			
 			
 			particles.add(new Particle(mass, dummyGroup.getChannel("Translation"), new Vec3()));
+			
+			if(i!=anz-1 && i!=0) {
+				//Erdanzeihung
+				forces.add(new Gravity(particles.get(i), new Vec3(0, -5f, 0)));
+			}
 			
 			if(i==0) {
 				 c1_trans = dummyGroup.getChannel("Translation");
@@ -154,6 +161,8 @@ public class TestSpring {
 		}
 		
 		
+		
+		
 		ParticleSystem psystem = new ParticleSystem(particles, forces);
 
 		ParticleEulerController peCtrl;
@@ -164,6 +173,10 @@ public class TestSpring {
 		KeyboardTranslationController ktc;
 		ktc = new KeyboardTranslationController(c1_trans, c1_vec3);
 		controllers.add(ktc);
+		
+		
+		
+		
 		
 		// create additional grid for visualization
 		world = VisualHelp.makeGrid(world, 5);
