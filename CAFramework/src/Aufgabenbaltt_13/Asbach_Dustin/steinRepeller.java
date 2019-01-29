@@ -1,5 +1,13 @@
 package Aufgabenbaltt_13.Asbach_Dustin;
 
+/**
+*CA Winter 2018/19
+*Name , Vorname : Asbach , Dustin
+*Matrikelnummer : 11117108
+*Aufgabenblatt : 13
+*Aufgabe : 13.3 
+**/
+
 import math.Vec3;
 import particles.ExternalForce;
 import particles.Particle;
