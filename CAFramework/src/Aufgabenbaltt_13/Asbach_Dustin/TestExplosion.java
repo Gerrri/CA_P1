@@ -10,39 +10,44 @@
 
 package Aufgabenbaltt_13.Asbach_Dustin;
 
-/**
-*CA Winter 2018/19
-*Name , Vorname : Asbach , Dustin
-*Matrikelnummer : 11117108
-*Aufgabenblatt : 13
-*Aufgabe : 13.1 
-**/
-
 import java.util.ArrayList;
 
-import particles.DampedSpring;
+import org.lwjgl.input.Controller;
+
+import math.MathUtil;
+import math.Vec3;
+import math.function.ArcLengthTrafoBuilder;
+import math.function.FunctionR1Vec3;
+import math.function.util.BezierCurve;
+import particles.Emitter;
+import particles.EulerMethod;
 import particles.Force;
 import particles.Gravity;
+import particles.HeunMethod;
 import particles.Particle;
+import particles.ParticleController;
 import particles.ParticleEulerController;
 import particles.ParticleSystem;
-import math.Vec3;
-import math.Vec4;
+import particles.PointEmitter;
 import renderer.AbstRenderer;
 import renderer.Ogl3Renderer;
 import scenegraph.AbstCamera;
+import scenegraph.AbstLight;
 import scenegraph.AmbientLight;
 import scenegraph.Channel;
+import scenegraph.Color;
+import scenegraph.ColorState;
 import scenegraph.Group;
-import scenegraph.MaterialState;
+import scenegraph.ParticleGroup;
 import scenegraph.PerspectiveCamera;
-import scenegraph.Point;
+import scenegraph.PointLight;
+import scenegraph.util.Loader;
 import scenegraph.util.VisualHelp;
 import animation.AbstController;
 import animation.CameraController;
+import animation.FunctionR1Vec3Controller;
 
-public class TestSpring {
-
+public class TestExplosion {
 	/**
 	 * flag is set, when program shall be terminated
 	 */
@@ -68,6 +73,8 @@ public class TestSpring {
 	 */
 	private final ArrayList<AbstController> controllers;
 	
+	private AbstLight light;
+	
 	/**
 	 * Constructor constructs all scene objects and orders them hierarchically.
 	 * 
@@ -76,22 +83,19 @@ public class TestSpring {
 	 * @param height
 	 *            The vertical window size in pixels
 	 */
-	public TestSpring(int width, int height)  {
+	public TestExplosion(int width, int height)  {
 		// generate and initialize Renderer 
 		renderer = new Ogl3Renderer (width, height);
 		renderer.initState();
-		renderer.setTitle ("Spring forces");
+		renderer.setTitle ("Aufgabenblatt 12");
 		
 		// generate root element of the scene
-		world = new Group ("Two Particles connected by a damped spring");
+		world = new Group ("Explosion");
 		
 		// generate camera and attach it to the scene
-		camera = new PerspectiveCamera(0, 30, 40);
+		camera = new PerspectiveCamera(0, 10, 30);
 		camera.setZRange(camera.getZNear(),500);
 		world.attachChild(camera);
-		
-		AmbientLight light = new AmbientLight("Raumlicht");
-		world.attachChild(light);
 		
 		// Create list with all controllers
 		controllers = new ArrayList<AbstController>();
@@ -100,129 +104,89 @@ public class TestSpring {
 		CameraController camctrl = new CameraController(camera.getChannel(AbstCamera.TRANSLATION), camera.getChannel(AbstCamera.ROTATION), camera.getFocus(), camera.getUp());
 		controllers.add(camctrl);
 		
-		// Create shape of mass points
-		Point massPoint = new Point(6);
+		light = new AmbientLight("Lichtquelle");
+		light.setDiffuse(new Vec3(1f,1f,1f));
+		world.attachChild(light);
+		
+		light = new PointLight("Lichtquelle");
+		light.setTranslation (0,2,10);
+		world.attachChild(light);
+		
+		// Create Bezier curve for fuze and parameterize to arc length to get constant speed
+				
+		Vec3 p1 = new Vec3 (-10, 0, 0);
+		Vec3 p2 = new Vec3 (-3, 0, -4);
+		Vec3 p3 = new Vec3 (5, 0, 3);
+		Vec3 p4 = new Vec3 (10, 0, 0);
+		BezierCurve fuze = new BezierCurve(new Vec3[] { p1, p2, p3, p4 });
+		ArcLengthTrafoBuilder trafoStretch = new ArcLengthTrafoBuilder(fuze, 100, 0.0f, 1f);
+		FunctionR1Vec3 fuzeFunc = trafoStretch.getArcLengthParamCurve();
+		float fuzeLength = trafoStretch.getArcLength();
+		
+		// load mesh object
+		Group zuender = Loader.loadMesh("xball.obj");
+		zuender.setScale (0.4f, 0.4f, 0.4f);
+		zuender.setTranslation (p4);
+		world.attachChild (zuender);
+		
+		ArrayList<Particle> particles = new ArrayList<Particle>();
+		ArrayList<Force> forces = new ArrayList<Force>();
+			
+		//Fuze
+			// create particleGroup for fuze particles
+			ParticleGroup pg_fuze = new ParticleGroup();
+			
+			// create and configure emitter for fuze particles
+			PointEmitter e_fuze = new PointEmitter(100,0.1f,p1);
+			e_fuze.setSpeedInterval(10, 15);
+			e_fuze.setVelocityCone(new Vec3(-1, 0, 0), 0.7f);
+			e_fuze.setTermination(fuzeLength);
+			
+			// create HeunMethod or EulerMethod
+			EulerMethod em = new EulerMethod(4);
+			
+			
+			// create and configure Controller to move initial position of PointEmitter
+			FunctionR1Vec3Controller fc_fuze = new FunctionR1Vec3Controller(AbstController.RepeatType.CLAMP, e_fuze.getChannel(PointEmitter.SOURCE), fuzeFunc);
+			controllers.add(fc_fuze);
+			
+			// create Controller to animate particles 
+			ParticleController pc_fuze = new ParticleController(pg_fuze, e_fuze, null, em);
+			controllers.add(pc_fuze);
+			
+			
+		
+		//Explosion
+			// create particleGroup for explosion particles
+			ParticleGroup pg_explosion = new ParticleGroup();
+			
+			// create and configure emitter for explosion particles
+			PointEmitter e_explosion = new PointEmitter(50000, 0.7f, p4);
+			e_explosion.setSpeedInterval(10, 15);
+			e_explosion.setTermination(0.2f);
+			
+			// create and configure Controller to animate particles 
+			ParticleController pc_explosion = new ParticleController(pg_explosion, e_explosion, null, em);
+			pc_explosion.setGlobalStartTime(fuzeLength);
+			controllers.add(pc_explosion);
 
-
-		// Create particle system		
-			ArrayList<Particle> particles = new ArrayList<Particle>();
-			ArrayList<Force> forces = new ArrayList<Force>();
-		
-		
-		float L = 1.0f;
-		float ks = 10f;
-		float kd = 10f;
-		
-		float x_pos;
-		float mass=0.5f;
-		
-		//Create other Particles 1 to 10
-		MaterialState mat;
-		Group dummyGroup;
-		int anz = 11;
-		
-		
-		Channel c1_trans = null;
-		Vec3 c1_vec3 = null;
-		
-		for(int i =0;i<anz;i++) {
-			mat = new MaterialState ();
-			mat.setAmbient (createRandomVec3UnitCube());
-			mat.setDiffuse (createRandomVec3UnitCube());
-			mat.setSpecular (createRandomVec3UnitCube());
-			mat.setShininess (500);
-			world.attachChild(mat);
-			
-			// x postion berechnen
-			x_pos = i-5;
 			
 			
-			dummyGroup = new Group("Cube_" + i+1);
-			dummyGroup.setTranslation(new Vec3(x_pos, 4f, 0.0f));
-			dummyGroup.attachChild(massPoint);
-			world.attachChild(dummyGroup);
-			
-			
-			particles.add(new Particle(mass, dummyGroup.getChannel("Translation"), new Vec3()));
-			
-			if(i!=anz-1 && i!=0) {
-				//Erdanzeihung
-				forces.add(new Gravity(particles.get(i), new Vec3(0, -2f, 0)));
-			}
-			
-			if(i==0) {
-				 c1_trans = dummyGroup.getChannel("Translation");
-				 c1_vec3 = dummyGroup.getTranslation();			
-			}
-						
-			
-		}
-		
-		//Kräfte von rechts nach links
-		for(int i=1;i<anz-1;i++) {
-			forces.add(new DampedSpring(particles.get(i), particles.get(i+1), ks, kd, L));
-		}
-		
-		//Kräfte von links nach rechts
-		for(int i=anz-2;i>0;i--) {
-			forces.add(new DampedSpring(particles.get(i), particles.get(i-1), ks, kd, L));
-		}
-		
-		
-		
-		
-		ParticleSystem psystem = new ParticleSystem(particles, forces);
-
-		ParticleEulerController peCtrl;
-		peCtrl = new ParticleEulerController("EulerController", psystem, 1);
-		controllers.add(peCtrl);
-		
-		//Keyboard Controller
-		KeyboardTranslationController ktc;
-		ktc = new KeyboardTranslationController(c1_trans, c1_vec3);
-		controllers.add(ktc);
-		
-		
-		
-		
+		//attach to world
+		world.attachChild(pg_explosion);
+		world.attachChild(pg_fuze);
 		
 		// create additional grid for visualization
-		world = VisualHelp.makeGrid(world, 5);
+		world = VisualHelp.makeGrid(world, 10, 2);
+		
+		// vizualize path
+		world = VisualHelp.makePath(world, fuzeFunc);
 		
 		// calculate transformation matrices 
 		world.updateTransform();
 		
 		// set the viewport for the scene
 		renderer.setCamera (camera);
-	}
-
-	public Vec3 createRandomVec3Ball(float radius) {
-		double x = Math.random();
-		double y = Math.random();
-		double z = Math.random();
-		x -= 0.5;
-		y -= 0.5;
-		z -= 0.5;
-		
-		Vec3 vec = new Vec3((float) x, (float) y, (float) z);
-		vec.normalize();
-		vec.mul(radius);
-		return vec;		
-	}
-	
-	public Vec4 createRandomVec4UnitCube() {
-		double x = Math.random();
-		double y = Math.random();
-		double z = Math.random();
-		double alpha = Math.random();
-		return  new Vec4((float) x, (float) y, (float) z, (float) alpha);
-	}
-	
-	public Vec3 createRandomVec3UnitCube() {
-		double x = Math.random();
-		double y = Math.random();
-		double z = Math.random();
-		return  new Vec3((float) x, (float) y, (float) z);
 	}
 	
 	/**
@@ -303,7 +267,7 @@ public class TestSpring {
 		int width  = 1400;
 		int height = 1000;
 							
-		TestSpring demo  = new TestSpring( width, height );
+		TestExplosion demo  = new TestExplosion( width, height );
 		demo.gameLoop();
 	}
 }
