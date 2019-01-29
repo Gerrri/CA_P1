@@ -3,9 +3,7 @@ package Aufgabenbaltt_13.Asbach_Dustin;
 import java.util.ArrayList;
 
 import math.Vec3;
-import particles.DifferentialSolver;
 import particles.Emitter;
-import particles.ParticleSystem;
 import scenegraph.Channel;
 import java.util.Random;
 
@@ -36,6 +34,7 @@ public class LineEmitter extends Emitter{
 	
 		return new Vec3(x,y,z);
 	}
+	
 
 	private float random_cord(float p1, float p2) {
 		Random random = new Random();
@@ -44,7 +43,7 @@ public class LineEmitter extends Emitter{
 		if(p1>p2) {
 			max = p1;
 			min = p2;
-		}else {
+		}else{
 			max = p2;
 			min = p1;
 		}
